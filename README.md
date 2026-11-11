@@ -3,6 +3,41 @@
 **A weather app built step by step, as a public tutorial on professional Android
 development with Clean Architecture and an AI coding agent.**
 
+<!-- step-banner:start -->
+## 📍 You are on Step 07 of 7 — Quality & release: prove it works the way users get it
+
+`step-07-quality-release` · [← Step 06](https://github.com/AhmedJAbuSada/atmos-android/tree/step-06-integration) · [All steps](docs/ROADMAP.md)
+
+**What this step is.** Proof that the product works the way users get it: an end-to-end test on an emulator against the real API, a smoke test of the R8-shrunk release build, screenshots rendered by CI (which found a real Arabic bidi bug), release signing from the environment, pseudo-locales, a changelog, and release/accessibility/localization checklists.
+
+**Why it matters.** Unit tests prove the parts work; this step proves the *product* does. It also separates honestly what CI has verified from what still needs a person (native-speaker review, TalkBack, real devices).
+
+**What you will find in this branch**
+
+| Where | What |
+|---|---|
+| `app/src/androidTest/` | End-to-end journey on a device |
+| `scripts/release-smoke-test.sh` | Installs and launches the release build |
+| `docs/screenshots/` | Rendered by CI from the real code |
+| `docs/process/*_CHECKLIST.md` | Release, accessibility, localization |
+
+**How to study this step**
+
+1. **Read the full guide:** [docs/steps/07-quality-release.md](docs/steps/07-quality-release.md): key ideas, diagrams, and *how the AI agent helped* (including what went wrong).
+2. **See exactly what this step changed:** [compare with step 06](https://github.com/AhmedJAbuSada/atmos-android/compare/step-06-integration...step-07-quality-release).
+3. **Run it:**
+   ```bash
+   ./gradlew :app:testDebugUnitTest
+   ./gradlew connectedDebugAndroidTest   # needs a device or emulator
+   ```
+4. **Try the exercise:** Turn on Roborazzi's verify mode in CI, change a colour, and watch the build fail.
+
+> This README shows the project *as it was at this step*. The finished app is on
+> [`main`](https://github.com/AhmedJAbuSada/atmos-android).
+
+---
+<!-- step-banner:end -->
+
 ![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?logo=kotlin&logoColor=white)
 ![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-4285F4?logo=jetpackcompose&logoColor=white)
 ![Clean Architecture](https://img.shields.io/badge/Clean%20Architecture-3%20layers-success)
