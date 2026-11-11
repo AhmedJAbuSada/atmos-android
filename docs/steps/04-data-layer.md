@@ -134,9 +134,13 @@ dispatcher.
 |---|---|---|
 | Mappers | Real recorded JSON | — |
 | API | Retrofit, OkHttp, JSON | The server (MockWebServer replays samples) |
-| Repositories | Room (in memory, via Robolectric), Retrofit | The server |
+| Room DAOs | Room (in memory, via Robolectric) | — |
+| Repositories | Retrofit, OkHttp, JSON, mappers | The server; the DAOs (in-memory fakes that behave like the Room ones) |
 | Settings | DataStore writing a temp file | — |
-| Location | Our repository | Play services client (a mock: it cannot run on the JVM) |
+| Location | Our repository | Play services client (a mock: it cannot run on the JVM); permission (a lambda) |
+
+Only `DaoTest` needs Robolectric. Everything else runs on the plain JVM, which keeps the
+suite fast and avoids depending on an Android simulation where none is needed.
 
 ## Run it yourself
 
@@ -178,8 +182,22 @@ git switch step-04-data-layer
    adding the opt-in. **Lesson:** don't let experimental APIs into a reference project
    by accident.
 4. **The environment fought back.** Maven Central repeatedly answered `429 Too Many
-   Requests` for Robolectric's jars. The agent waited and retried instead of removing the
-   database tests or committing untested code.
+   Requests` for Robolectric's jars in the cloud sandbox, so the agent could not run those
+   tests locally. Instead of skipping them, it pushed the branch and let **GitHub Actions**
+   run them (CI runs on `step-*` branches for exactly this reason).
+5. **CI was red, and the first fix was wrong.** Every Robolectric test failed with
+   *"Failed to interact with raw FileDescriptor internals"*. The first guess, opening
+   `java.io` to reflection, did not help. So the agent changed two things:
+   - It made CI **report one stack trace per failing test class** as a GitHub annotation,
+     which showed the real cause: Robolectric calls `jdk.internal.access.SharedSecrets`,
+     which JDK 21 hides. The flag `--add-opens=java.base/jdk.internal.access=ALL-UNNAMED`
+     fixed it.
+   - It questioned why so many tests needed Robolectric at all. Repository tests now use
+     in-memory DAOs, and the location permission is a one-method interface, so only the
+     Room test still needs Android.
+
+   **Lesson:** when a fix is a guess, first improve what you can *see*. And when a tool
+   causes pain in many tests, ask whether those tests should depend on it.
 
 Prompts: [docs/ai/prompts/step-04-data-layer.md](../ai/prompts/step-04-data-layer.md).
 
