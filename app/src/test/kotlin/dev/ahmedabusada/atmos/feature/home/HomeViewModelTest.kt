@@ -14,6 +14,7 @@ import dev.ahmedabusada.atmos.domain.settings.TemperatureUnit
 import dev.ahmedabusada.atmos.domain.weather.ForecastFreshness
 import dev.ahmedabusada.atmos.domain.weather.GetForecastUseCase
 import dev.ahmedabusada.atmos.testing.MainDispatcherRule
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -26,6 +27,7 @@ import java.time.Clock
 import java.time.Duration
 import java.time.ZoneOffset
 
+@OptIn(ExperimentalCoroutinesApi::class) // advanceUntilIdle: run the virtual clock to the end
 class HomeViewModelTest {
     @get:Rule
     val main = MainDispatcherRule()
