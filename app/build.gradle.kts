@@ -17,17 +17,39 @@ android {
         applicationId = "dev.ahmedabusada.atmos"
         minSdk = 26
         targetSdk = 37
-        versionCode = 6
-        versionName = "0.6.0"
+        versionCode = 10
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // Release signing comes from environment variables (CI secrets or a developer's shell),
+    // never from a file in the repository. Without them, the release build is unsigned,
+    // which is fine for checking that it builds and shrinks correctly.
+    val releaseKeystore = System.getenv("ATMOS_KEYSTORE_PATH")
+    signingConfigs {
+        if (releaseKeystore != null) {
+            create("release") {
+                storeFile = file(releaseKeystore)
+                storePassword = System.getenv("ATMOS_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("ATMOS_KEY_ALIAS")
+                keyPassword = System.getenv("ATMOS_KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
+        debug {
+            // Pseudo-locales: en-XA stretches every string (~30% longer, with accents) and
+            // ar-XB mirrors the layout, so truncation and RTL bugs show up without a
+            // translator (Settings → Languages on the device).
+            isPseudoLocalesEnabled = true
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.findByName("release")
         }
     }
 
@@ -71,6 +93,12 @@ dependencies {
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
+
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.compose.ui.test.junit4)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    debugImplementation(libs.compose.ui.test.manifest)
 
     testImplementation(testFixtures(project(":domain")))
     testImplementation(libs.junit)
