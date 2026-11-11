@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Merged into the app manifest. The permission lives next to the code that uses it. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Coarse only: city-level accuracy is enough for weather (NF-06). -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+</manifest>

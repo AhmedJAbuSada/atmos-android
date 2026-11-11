@@ -72,6 +72,7 @@ dependencies {
     ksp(libs.room.compiler)
     implementation(libs.datastore.preferences)
 
+    implementation(libs.androidx.core.ktx)
     implementation(libs.play.services.location)
     implementation(libs.kotlinx.coroutines.play.services)
 
@@ -82,4 +83,7 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.turbine)
     testImplementation(libs.okhttp.mockwebserver)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.mockk)
 }
