@@ -2,8 +2,8 @@
 
 > Read this first at the start of every work session (human or AI). Update it at the end.
 
-**Current step:** 03, domain layer ✅ done
-**Next up:** step 04, data layer (`step-04-data-layer`)
+**Current step:** 04, data layer ✅ done
+**Next up:** step 05, presentation / UI (`step-05-presentation-ui`)
 **Last updated:** 2026-11-11
 
 ## Status
@@ -13,42 +13,36 @@
 | 01 Planning | ✅ Done | `step-01-planning` | `v0.1.0` |
 | 02 Project structure | ✅ Done | `step-02-project-structure` | `v0.2.0` |
 | 03 Domain layer | ✅ Done | `step-03-domain-layer` | `v0.3.0` |
-| 04 Data layer | ⏳ Next | `step-04-data-layer` | — |
-| 05 Presentation / UI | ⬜ | — | — |
+| 04 Data layer | ✅ Done | `step-04-data-layer` | `v0.4.0` |
+| 05 Presentation / UI | ⏳ Next | `step-05-presentation-ui` | — |
 | 06 Integration | ⬜ | — | — |
 | 07 Quality & release | ⬜ | — | — |
 
-## Next up: step 04 plan
-Everything in `:data`; implements the interfaces from `:domain`. Tests use the recorded
-samples in `docs/api/samples/` (copy them into `data/src/test/resources/`).
-1. **Remote:** Retrofit `ForecastApi` and `GeocodingApi`, kotlinx.serialization DTOs (all
-   fields nullable; `results` defaults to an empty list), OkHttp with the timeouts, retry
-   rule and User-Agent from API_CONTRACT §4.
-2. **Mappers:** `ForecastDto.toDomain(requested coordinates, fetchedAt)` (zip parallel
-   arrays safely, parse local times, `is_day` 0/1), `CityDto.toDomain()`. Tests against
-   every sample file.
-3. **Errors:** map `IOException`, `SocketTimeoutException`, `HttpException` and
-   serialization errors to `DomainError` with `runCatchingDomain`.
-4. **Local:** Room database with `SavedCityEntity` and a forecast cache keyed by the
-   *requested* coordinates (rounded); DataStore Preferences for `UserSettings`.
-5. **Location:** `FusedLocationProviderClient` behind `LocationRepository`; permission
-   check returns `LocationPermissionDenied`.
-6. **Repositories:** `WeatherRepositoryImpl`, `CityRepositoryImpl`,
-   `SettingsRepositoryImpl`, `LocationRepositoryImpl`, all switching to an injected IO
-   dispatcher.
-7. **DI:** Hilt modules binding interfaces to implementations; `Clock` and dispatchers
-   provided once.
-8. **Tests:** MockWebServer with the samples (success, empty search, 400, 500, timeout),
-   Room and DataStore tests, coverage ≥ 80% on `:data`.
-9. Exclude the cache database from backups (`backup_rules.xml`,
-   `data_extraction_rules.xml`).
-10. `docs/steps/04-data-layer.md`, prompts file, update this file.
+## Next up: step 05 plan
+Everything in `:app`. Screens use **fake data** (preview providers) in this step; wiring to
+the real use cases is step 06.
+1. **Design system** (`ui/theme/`): colour schemes (light, dark, dynamic colour on
+   Android 12+), typography, spacing tokens, shapes; `AtmosTheme`.
+2. **Formatting** (`ui/format/`): temperature, wind, percentage, hour and day names with
+   the **app locale** (decimal comma in Turkish, 12/24 h from the device); unit tests in
+   en, tr and ar.
+3. **Condition UI** (`ui/weather/`): `WeatherCondition` → localized label + icon, with a
+   night variant for clear skies.
+4. **Error UI**: `DomainError` → localized message.
+5. **Screens** (stateless, `state` + `onEvent`): Home (current, hourly row, daily list,
+   outdated banner, skeleton loading, error with retry), Cities (search field, results,
+   saved list with swipe-to-remove and Undo), Settings, About.
+6. **ViewModels** with one `StateFlow<UiState>` each, tested with fake use cases and
+   Turbine; search debounce 300 ms in `CitiesViewModel`.
+7. **Strings** for every screen in `values`, `values-tr`, `values-ar`.
+8. **Previews**: light, dark, Arabic RTL and font scale 2× for every screen.
+9. `docs/steps/05-presentation-ui.md`, prompts file, update this file.
 
 ## Open decisions
 - None.
 
 ## Notes for the next session
-- Real Open-Meteo responses are in `docs/api/samples/`; use them as test fixtures in step 04.
+- Real Open-Meteo responses are in `docs/api/samples/`; `:data` tests read them directly.
 - Package name: `dev.ahmedabusada.atmos`.
 - Toolchain: AGP 9.5.1 (built-in Kotlin), Kotlin 2.4.21, Gradle 9.9.1, JDK 21,
   compileSdk/targetSdk 37, minSdk 26.
@@ -56,5 +50,6 @@ samples in `docs/api/samples/` (copy them into `data/src/test/resources/`).
   `geocoding-api.open-meteo.com` and `dl.google.com`. The Android SDK is not
   pre-installed; install the command-line tools to `/opt/android-sdk` and create
   `local.properties` with `sdk.dir=/opt/android-sdk`. Use `--max-workers=2` if the proxy
-  returns HTTP 429.
+  returns HTTP 429. If Maven Central keeps answering 429 for large jars (Robolectric), push
+  the branch and let GitHub Actions run the tests: CI runs on `step-*` branches.
 - Git tags cannot be pushed from cloud sessions; create them as GitHub releases instead.

@@ -11,7 +11,7 @@ development with Clean Architecture and an AI coding agent.**
 
 [![CI](https://github.com/AhmedJAbuSada/atmos-android/actions/workflows/ci.yml/badge.svg)](https://github.com/AhmedJAbuSada/atmos-android/actions/workflows/ci.yml)
 
-> 🚧 **In progress:** steps 01–03 of 7 are done. Follow along in [PROGRESS.md](docs/PROGRESS.md).
+> 🚧 **In progress:** steps 01–04 of 7 are done. Follow along in [PROGRESS.md](docs/PROGRESS.md).
 
 ## Why this repository exists
 
@@ -24,7 +24,7 @@ explained:
 | 01 | [`step-01-planning`](../../tree/step-01-planning) | PRD, user stories, API contract, architecture, ADRs, team process, AI agent rules |
 | 02 | [`step-02-project-structure`](../../tree/step-02-project-structure) | Gradle modules that enforce Clean Architecture, DI, linting, CI |
 | 03 | [`step-03-domain-layer`](../../tree/step-03-domain-layer) | Entities, use cases, errors as values, pure unit tests |
-| 04 | `step-04-data-layer` | Retrofit, mappers, Room cache, DataStore, cache-first repositories |
+| 04 | [`step-04-data-layer`](../../tree/step-04-data-layer) | Retrofit, mappers, Room cache, DataStore, cache-first repositories |
 | 05 | `step-05-presentation-ui` | Design system, Compose screens, ViewModels, previews (dark, RTL) |
 | 06 | `step-06-integration` | Real data, location, search, offline mode, navigation |
 | 07 | `step-07-quality-release` | Localization, accessibility, performance, UI tests, release |

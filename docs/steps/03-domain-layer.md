@@ -1,6 +1,6 @@
 # Step 03 — Domain layer: the business rules, in plain Kotlin
 
-**Branch:** `step-03-domain-layer` · **Tag:** `v0.3.0` · **Previous:** [step 02](02-project-structure.md) · **Next:** step 04, data layer
+**Branch:** `step-03-domain-layer` · **Tag:** `v0.3.0` · **Previous:** [step 02](02-project-structure.md) · **Next:** [step 04, data layer](04-data-layer.md)
 
 The domain is the heart of the app: **what Atmos knows and decides**, written with no
 framework at all. No Android, no Retrofit, no Room, no Compose. It is the part of the code
