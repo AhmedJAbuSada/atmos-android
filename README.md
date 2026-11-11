@@ -3,6 +3,41 @@
 **A weather app built step by step, as a public tutorial on professional Android
 development with Clean Architecture and an AI coding agent.**
 
+<!-- step-banner:start -->
+## 📍 You are on Step 06 of 7 — Integration: connect the views to the real data
+
+`step-06-integration` · [← Step 05](https://github.com/AhmedJAbuSada/atmos-android/tree/step-05-presentation-ui) · [Step 07 →](https://github.com/AhmedJAbuSada/atmos-android/tree/step-07-quality-release) · [All steps](docs/ROADMAP.md)
+
+**What this step is.** The glue: ViewModels that turn use-case results into UI state, *routes* that connect each stateless screen to its ViewModel and to Android (permission dialog, snackbars, links), type-safe navigation, debounced search with Undo, the offline banner, and one source of truth for the app language. After this step the app works end to end.
+
+**Why it matters.** Because the screens were stateless, they did not change at all. Each layer has one job: screens draw, routes handle Android, ViewModels decide what to show, use cases hold the rules.
+
+**What you will find in this branch**
+
+| Where | What |
+|---|---|
+| `app/…/feature/*/…ViewModel.kt` | One StateFlow per screen |
+| `app/…/feature/*/…Route.kt` | Permissions, snackbars, navigation |
+| `app/…/navigation/AtmosNavHost.kt` | Type-safe routes |
+| `domain/src/testFixtures/` | Fakes shared with :app tests |
+
+**How to study this step**
+
+1. **Read the full guide:** [docs/steps/06-integration.md](docs/steps/06-integration.md): key ideas, diagrams, and *how the AI agent helped* (including what went wrong).
+2. **See exactly what this step changed:** [compare with step 05](https://github.com/AhmedJAbuSada/atmos-android/compare/step-05-presentation-ui...step-06-integration).
+3. **Run it:**
+   ```bash
+   ./gradlew :app:testDebugUnitTest
+   ./gradlew :app:installDebug   # the real app
+   ```
+4. **Try the exercise:** Write a test proving a search result that arrives *after* the user cleared the field is ignored.
+
+> This README shows the project *as it was at this step*. The finished app is on
+> [`main`](https://github.com/AhmedJAbuSada/atmos-android).
+
+---
+<!-- step-banner:end -->
+
 ![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?logo=kotlin&logoColor=white)
 ![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-4285F4?logo=jetpackcompose&logoColor=white)
 ![Clean Architecture](https://img.shields.io/badge/Clean%20Architecture-3%20layers-success)
