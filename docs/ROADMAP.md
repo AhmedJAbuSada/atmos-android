@@ -16,7 +16,7 @@ git switch step-03-domain-layer   # any step
 | 03 | `step-03-domain-layer` | `v0.3.0` | Entities, repository interfaces, use cases, errors as values, testing pure business logic | [03-domain-layer.md](steps/03-domain-layer.md) |
 | 04 | `step-04-data-layer` | `v0.4.0` | DTOs, Retrofit, mappers, Room cache, DataStore, cache-first repositories, testing with recorded responses | [04-data-layer.md](steps/04-data-layer.md) |
 | 05 | `step-05-presentation-ui` | `v0.5.0` | Design system, stateless Compose screens with fake data, UI state, previews (dark, RTL, large font) | [05-presentation-ui.md](steps/05-presentation-ui.md) |
-| 06 | `step-06-integration` | `v0.6.0` | ViewModels, wiring UI to real data, location permission, search, offline mode, navigation | 06-integration.md |
+| 06 | `step-06-integration` | `v0.6.0` | ViewModels, wiring UI to real data, location permission, search, offline mode, navigation | [06-integration.md](steps/06-integration.md) |
 | 07 | `step-07-quality-release` | `v0.7.0` | Localization (en/tr/ar), accessibility, performance, UI tests, release build | 07-quality-release.md |
 | — | `main` | `v1.0.0` | The finished app | — |
 

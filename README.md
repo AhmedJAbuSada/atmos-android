@@ -11,7 +11,7 @@ development with Clean Architecture and an AI coding agent.**
 
 [![CI](https://github.com/AhmedJAbuSada/atmos-android/actions/workflows/ci.yml/badge.svg)](https://github.com/AhmedJAbuSada/atmos-android/actions/workflows/ci.yml)
 
-> 🚧 **In progress:** steps 01–05 of 7 are done. Follow along in [PROGRESS.md](docs/PROGRESS.md).
+> 🚧 **In progress:** steps 01–06 of 7 are done. The app works end to end. Follow along in [PROGRESS.md](docs/PROGRESS.md).
 
 ## Why this repository exists
 
@@ -26,7 +26,7 @@ explained:
 | 03 | [`step-03-domain-layer`](../../tree/step-03-domain-layer) | Entities, use cases, errors as values, pure unit tests |
 | 04 | [`step-04-data-layer`](../../tree/step-04-data-layer) | Retrofit, mappers, Room cache, DataStore, cache-first repositories |
 | 05 | [`step-05-presentation-ui`](../../tree/step-05-presentation-ui) | Design system, stateless Compose screens, previews (dark, RTL, large font) |
-| 06 | `step-06-integration` | ViewModels, real data, location, search, offline mode, navigation |
+| 06 | [`step-06-integration`](../../tree/step-06-integration) | ViewModels, real data, location, search, offline mode, navigation |
 | 07 | `step-07-quality-release` | Localization, accessibility, performance, UI tests, release |
 | — | `main` | The finished app |
 
