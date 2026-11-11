@@ -122,9 +122,31 @@ jobs:
           target: google_apis
           arch: x86_64
           disable-animations: true
+          # Output goes to a log too, so a failure can be reported below.
           script: |
-            ./gradlew connectedDebugAndroidTest
-            ./scripts/release-smoke-test.sh
+            ./gradlew connectedDebugAndroidTest 2>&1 | tee device.log; test ${PIPESTATUS[0]} -eq 0
+            ./scripts/release-smoke-test.sh 2>&1 | tee -a device.log; test ${PIPESTATUS[0]} -eq 0
+
+      - name: Annotate device failures
+        if: failure()
+        run: |
+          python3 - <<'PY'
+          import glob, re, xml.etree.ElementTree as ET
+          def emit(title, text):
+              text = text.replace("%", "%25").replace("\r", "").replace("\n", "%0A")
+              print(f"::error title={title}::{text}")
+          for path in glob.glob("app/build/outputs/androidTest-results/**/*.xml", recursive=True):
+              for case in ET.parse(path).getroot().iter("testcase"):
+                  for problem in list(case):
+                      if problem.tag in ("failure", "error"):
+                          emit(case.get("classname"), "\n".join((problem.text or "").splitlines()[:25]))
+          try:
+              log = open("device.log", encoding="utf-8", errors="replace").read()
+              match = re.search(r"What went wrong:(.{0,2500})", log, re.S)
+              emit("Gradle", match.group(1) if match else "\n".join(log.splitlines()[-40:]))
+          except FileNotFoundError:
+              emit("Emulator", "No device.log: the emulator may not have started.")
+          PY
 
       - name: Upload device test reports
         if: always()
