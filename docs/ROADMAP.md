@@ -17,10 +17,9 @@ git switch step-03-domain-layer   # any step
 | 04 | `step-04-data-layer` | `v0.4.0` | DTOs, Retrofit, mappers, Room cache, DataStore, cache-first repositories, testing with recorded responses | [04-data-layer.md](steps/04-data-layer.md) |
 | 05 | `step-05-presentation-ui` | `v0.5.0` | Design system, stateless Compose screens with fake data, UI state, previews (dark, RTL, large font) | [05-presentation-ui.md](steps/05-presentation-ui.md) |
 | 06 | `step-06-integration` | `v0.6.0` | ViewModels, wiring UI to real data, location permission, search, offline mode, navigation | [06-integration.md](steps/06-integration.md) |
-| 07 | `step-07-quality-release` | `v0.7.0` | Localization (en/tr/ar), accessibility, performance, UI tests, release build | 07-quality-release.md |
+| 07 | `step-07-quality-release` | `v0.7.0` | End-to-end and release smoke tests on an emulator, screenshots, signing, checklists | [07-quality-release.md](steps/07-quality-release.md) |
 | — | `main` | `v1.0.0` | The finished app | — |
 
-Guides without links are not written yet; they appear when their step lands.
 
 ## How each step is built
 
