@@ -2,8 +2,8 @@
 
 > Read this first at the start of every work session (human or AI). Update it at the end.
 
-**Current step:** 02, project structure ✅ done
-**Next up:** step 03, domain layer (`step-03-domain-layer`)
+**Current step:** 03, domain layer ✅ done
+**Next up:** step 04, data layer (`step-04-data-layer`)
 **Last updated:** 2026-11-11
 
 ## Status
@@ -12,27 +12,37 @@
 |---|---|---|---|
 | 01 Planning | ✅ Done | `step-01-planning` | `v0.1.0` |
 | 02 Project structure | ✅ Done | `step-02-project-structure` | `v0.2.0` |
-| 03 Domain layer | ⏳ Next | `step-03-domain-layer` | — |
-| 04 Data layer | ⬜ | — | — |
+| 03 Domain layer | ✅ Done | `step-03-domain-layer` | `v0.3.0` |
+| 04 Data layer | ⏳ Next | `step-04-data-layer` | — |
 | 05 Presentation / UI | ⬜ | — | — |
 | 06 Integration | ⬜ | — | — |
 | 07 Quality & release | ⬜ | — | — |
 
-## Next up: step 03 plan
-Everything in `:domain`, pure Kotlin, tests first (one test per acceptance criterion where
-it applies to the domain).
-1. `common/`: `AppResult`, `DomainError`, `runCatchingDomain` (rethrows
-   `CancellationException`), `Clock` interface.
-2. `weather/`: `Forecast`, `CurrentWeather`, `HourlyForecast`, `DailyForecast`,
-   `WeatherCondition` (+ WMO code mapping), `WeatherRepository` interface,
-   `GetForecastUseCase` (cache freshness 30 min).
-3. `location/`: `Coordinates`, `City`, `LocationRepository`, `CityRepository`,
-   `SearchCitiesUseCase` (min 2 chars), `SaveCityUseCase` (no duplicates),
-   `RemoveCityUseCase`, `ObserveSavedCitiesUseCase`.
-4. `settings/`: `UserSettings`, `TemperatureUnit`, `WindSpeedUnit`, `AppLanguage`,
-   `AppTheme`, `SettingsRepository`, unit conversion functions.
-5. Tests with JUnit + coroutines-test + Turbine; Kover coverage ≥ 90% on `:domain`.
-6. `docs/steps/03-domain-layer.md`, prompts file, update this file.
+## Next up: step 04 plan
+Everything in `:data`; implements the interfaces from `:domain`. Tests use the recorded
+samples in `docs/api/samples/` (copy them into `data/src/test/resources/`).
+1. **Remote:** Retrofit `ForecastApi` and `GeocodingApi`, kotlinx.serialization DTOs (all
+   fields nullable; `results` defaults to an empty list), OkHttp with the timeouts, retry
+   rule and User-Agent from API_CONTRACT §4.
+2. **Mappers:** `ForecastDto.toDomain(requested coordinates, fetchedAt)` (zip parallel
+   arrays safely, parse local times, `is_day` 0/1), `CityDto.toDomain()`. Tests against
+   every sample file.
+3. **Errors:** map `IOException`, `SocketTimeoutException`, `HttpException` and
+   serialization errors to `DomainError` with `runCatchingDomain`.
+4. **Local:** Room database with `SavedCityEntity` and a forecast cache keyed by the
+   *requested* coordinates (rounded); DataStore Preferences for `UserSettings`.
+5. **Location:** `FusedLocationProviderClient` behind `LocationRepository`; permission
+   check returns `LocationPermissionDenied`.
+6. **Repositories:** `WeatherRepositoryImpl`, `CityRepositoryImpl`,
+   `SettingsRepositoryImpl`, `LocationRepositoryImpl`, all switching to an injected IO
+   dispatcher.
+7. **DI:** Hilt modules binding interfaces to implementations; `Clock` and dispatchers
+   provided once.
+8. **Tests:** MockWebServer with the samples (success, empty search, 400, 500, timeout),
+   Room and DataStore tests, coverage ≥ 80% on `:data`.
+9. Exclude the cache database from backups (`backup_rules.xml`,
+   `data_extraction_rules.xml`).
+10. `docs/steps/04-data-layer.md`, prompts file, update this file.
 
 ## Open decisions
 - None.
