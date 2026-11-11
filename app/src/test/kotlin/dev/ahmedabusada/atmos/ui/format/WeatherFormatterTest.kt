@@ -62,7 +62,7 @@ class WeatherFormatterTest {
     fun `hours follow the device clock setting`() {
         val time = LocalDateTime.parse("2026-11-11T14:00")
         assertEquals("14:00", english.hour(time).visible())
-        assertEquals("2 PM", WeatherFormatter(Locale.forLanguageTag("en"), use24HourClock = false).hour(time))
+        assertEquals("2 PM", WeatherFormatter(Locale.forLanguageTag("en"), use24HourClock = false).hour(time).visible())
     }
 
     @Test
