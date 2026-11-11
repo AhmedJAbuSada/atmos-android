@@ -20,9 +20,8 @@ import javax.inject.Inject
  * Enums are stored by **name**. An unknown name (for example after renaming an enum
  * value) falls back to the default instead of crashing, so old data is always readable.
  */
-internal class SettingsRepositoryImpl @Inject constructor(
-    private val dataStore: DataStore<Preferences>,
-) : SettingsRepository {
+internal class SettingsRepositoryImpl @Inject constructor(private val dataStore: DataStore<Preferences>) :
+    SettingsRepository {
     override val settings: Flow<UserSettings> = dataStore.data
         // A corrupted or unreadable file must not take the app down: use the defaults.
         .catch { error -> if (error is IOException) emit(emptyPreferences()) else throw error }
@@ -59,4 +58,3 @@ internal class SettingsRepositoryImpl @Inject constructor(
         val THEME = stringPreferencesKey("theme")
     }
 }
-
