@@ -36,6 +36,7 @@ import dev.ahmedabusada.atmos.domain.settings.AppTheme
 import dev.ahmedabusada.atmos.domain.settings.TemperatureUnit
 import dev.ahmedabusada.atmos.domain.settings.UserSettings
 import dev.ahmedabusada.atmos.domain.settings.WindSpeedUnit
+import dev.ahmedabusada.atmos.ui.format.WeatherFormatter
 import dev.ahmedabusada.atmos.ui.preview.AtmosPreviews
 import dev.ahmedabusada.atmos.ui.theme.AtmosTheme
 
@@ -134,7 +135,10 @@ private fun <T> Segmented(@StringRes title: Int, options: List<Pair<T, Int>>, se
                     selected = value == selected,
                     onClick = { onSelect(value) },
                     shape = SegmentedButtonDefaults.itemShape(index, options.size),
-                ) { Text(stringResource(label)) }
+                ) {
+                    // Unit symbols (°C, km/h) are isolated, or Arabic layout shows "C°".
+                    Text(WeatherFormatter.isolate(stringResource(label)))
+                }
             }
         }
     }
