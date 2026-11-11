@@ -4,8 +4,8 @@ import dev.ahmedabusada.atmos.data.remote.GeocodingApi
 import dev.ahmedabusada.atmos.data.remote.RetryInterceptor
 import dev.ahmedabusada.atmos.data.remote.createOkHttpClient
 import dev.ahmedabusada.atmos.data.remote.createRetrofit
+import dev.ahmedabusada.atmos.data.testing.FakeSavedCityDao
 import dev.ahmedabusada.atmos.data.testing.Samples
-import dev.ahmedabusada.atmos.data.testing.inMemoryDatabase
 import dev.ahmedabusada.atmos.domain.common.AppResult
 import dev.ahmedabusada.atmos.domain.common.DomainError
 import dev.ahmedabusada.atmos.domain.location.City
@@ -17,35 +17,26 @@ import mockwebserver3.MockWebServer
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 import retrofit2.create
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneOffset
 
-@RunWith(RobolectricTestRunner::class)
-@Config(sdk = [36])
 class CityRepositoryImplTest {
     private val server = MockWebServer().apply { start() }
-    private val database = inMemoryDatabase()
     private val repository = CityRepositoryImpl(
         api = createRetrofit(
             server.url("/").toString(),
             createOkHttpClient("test", RetryInterceptor(baseDelayMillis = 0)),
         )
             .create<GeocodingApi>(),
-        dao = database.savedCityDao(),
+        dao = FakeSavedCityDao(),
         clock = Clock.fixed(Instant.parse("2026-11-11T07:15:00Z"), ZoneOffset.UTC),
         io = Dispatchers.Unconfined,
     )
 
     @After
-    fun tearDown() {
-        server.close()
-        database.close()
-    }
+    fun tearDown() = server.close()
 
     @Test
     fun `search returns cities in the requested language`() = runTest {
@@ -72,7 +63,7 @@ class CityRepositoryImplTest {
     }
 
     @Test
-    fun `a saved city survives the round trip through the database unchanged`() = runTest {
+    fun `a saved city survives the round trip through storage unchanged`() = runTest {
         server.enqueue(MockResponse(body = Samples.read("geocoding_istanbul_tr.json")))
         val istanbul = (repository.search("ista", "tr") as AppResult.Success).data.first()
 
