@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Only the window theme. Colours and typography live in Compose (step 05). -->
-    <style name="Theme.Atmos" parent="android:Theme.Material.Light.NoActionBar" />
+    <!--
+        Only the window theme. Colours and typography live in Compose (ui/theme).
+        AppCompat is needed for the per-app language API on Android 8–12 (ADR-0005).
+    -->
+    <style name="Theme.Atmos" parent="Theme.AppCompat.DayNight.NoActionBar" />
 </resources>

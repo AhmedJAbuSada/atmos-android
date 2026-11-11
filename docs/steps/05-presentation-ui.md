@@ -1,6 +1,6 @@
 # Step 05 — Presentation: the views, before any data
 
-**Branch:** `step-05-presentation-ui` · **Tag:** `v0.5.0` · **Previous:** [step 04](04-data-layer.md) · **Next:** step 06, integration
+**Branch:** `step-05-presentation-ui` · **Tag:** `v0.5.0` · **Previous:** [step 04](04-data-layer.md) · **Next:** [step 06, integration](06-integration.md)
 
 This step builds every screen as a **stateless function of a UI state**, with realistic
 fake data. No ViewModel, no repository, no network. Nothing is connected yet, and that is

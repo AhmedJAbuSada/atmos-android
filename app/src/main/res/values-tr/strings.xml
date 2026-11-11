@@ -55,7 +55,10 @@
     <string name="cities_clear_search">Aramayı temizle</string>
     <string name="cities_add">%1$s ekle</string>
     <string name="cities_remove">%1$s kaldır</string>
+    <string name="cities_removed">%1$s kaldırıldı</string>
+    <string name="cities_undo">Geri al</string>
     <string name="cities_no_results">Şehir bulunamadı</string>
+    <string name="cities_already_saved">%1$s zaten listenizde</string>
     <string name="cities_empty_saved">Buraya eklemek için bir şehir arayın.</string>
 
     <!-- Ayarlar -->

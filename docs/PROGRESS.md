@@ -2,8 +2,8 @@
 
 > Read this first at the start of every work session (human or AI). Update it at the end.
 
-**Current step:** 05, presentation / UI ✅ done
-**Next up:** step 06, integration (`step-06-integration`)
+**Current step:** 06, integration ✅ done
+**Next up:** step 07, quality & release (`step-07-quality-release`)
 **Last updated:** 2026-11-11
 
 ## Status
@@ -15,35 +15,26 @@
 | 03 Domain layer | ✅ Done | `step-03-domain-layer` | `v0.3.0` |
 | 04 Data layer | ✅ Done | `step-04-data-layer` | `v0.4.0` |
 | 05 Presentation / UI | ✅ Done | `step-05-presentation-ui` | `v0.5.0` |
-| 06 Integration | ⏳ Next | `step-06-integration` | — |
-| 07 Quality & release | ⬜ | — | — |
+| 06 Integration | ✅ Done | `step-06-integration` | `v0.6.0` |
+| 07 Quality & release | ⏳ Next | `step-07-quality-release` | — |
 
-## Next up: step 06 plan
-Connect the step-05 screens to the step-03 use cases (step-04 implementations via Hilt).
-1. **Test fixtures:** move the domain fakes to `domain/src/testFixtures` (`java-test-fixtures`)
-   so ViewModel tests in `:app` reuse them.
-2. **ViewModels** (`@HiltViewModel`, one `StateFlow<UiState>`, events in, one-off effects
-   out through a `Channel`):
-   - `HomeViewModel`: selected place (current location or a saved city), load on start,
-     refresh, retry, outdated banner from `ForecastSnapshot.refreshError` + age,
-     settings flow combined in.
-   - `CitiesViewModel`: query with 300 ms debounce (`debounce` + `mapLatest`), search in
-     the app language, add / remove with Undo snackbar effect, places list with cached
-     temperatures.
-   - `SettingsViewModel`: observe and update settings.
-3. **Selected place** shared between Home and Cities (a small `SelectedPlaceStore` in
-   `:app`, in memory; the current location by default).
-4. **Language:** apply `AppLanguage` with `AppCompatDelegate.setApplicationLocales`
-   (needs `androidx.appcompat`), and resolve `System` to the configuration locale for
-   search.
-5. **Location permission** with `rememberLauncherForActivityResult`, rationale first
-   (US-01), `NeedsLocation` when denied.
-6. **Navigation Compose** with type-safe routes: Home → Cities, Home → Settings → About.
-7. **Theme** from settings in `MainActivity`; links opened with a Custom Tab / browser
-   intent.
-8. **Tests:** ViewModel tests with Turbine and fakes for every acceptance criterion that
-   lives in the presentation layer (debounce, undo, refresh state).
-9. `docs/steps/06-integration.md`, prompts file, update this file.
+## Next up: step 07 plan
+1. **Screenshot tests** (Roborazzi on Robolectric) for every screen state in light, dark,
+   Arabic RTL and Turkish 200% font; images committed under `app/src/test/screenshots`
+   and shown in the README.
+2. **UI tests** (Compose UI test on Robolectric) for the key flows: search → add → undo,
+   settings unit change, NeedsLocation actions.
+3. **Accessibility:** automated checks in the UI tests (touch targets, content
+   descriptions); manual TalkBack pass checklist.
+4. **Performance:** Baseline Profile for startup and scrolling; check recomposition
+   counts of the hourly row; R8 full mode in release.
+5. **Localization review:** native-speaker review checklist for tr and ar; pseudo-locale
+   (`en-XA`, `ar-XB`) builds enabled for debug.
+6. **Release build:** signing config read from environment variables (never committed),
+   `bundleRelease` in CI, version 1.0.0, changelog.
+7. **Room migration test** setup for future schema versions.
+8. Merge to `main` as v1.0.0; update README with screenshots and the final numbers.
+9. `docs/steps/07-quality-release.md`, prompts file, update this file.
 
 ## Open decisions
 - None.
