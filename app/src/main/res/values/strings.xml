@@ -57,10 +57,7 @@
     <string name="cities_clear_search">Clear search</string>
     <string name="cities_add">Add %1$s</string>
     <string name="cities_remove">Remove %1$s</string>
-    <string name="cities_removed">%1$s removed</string>
-    <string name="cities_undo">Undo</string>
     <string name="cities_no_results">No cities found</string>
-    <string name="cities_already_saved">%1$s is already in your list</string>
     <string name="cities_empty_saved">Search for a city to add it here.</string>
 
     <!-- Settings -->
@@ -94,6 +91,8 @@
     <!-- Common -->
     <string name="action_back">Back</string>
     <string name="action_retry">Try again</string>
+    <string name="state_expanded">Expanded</string>
+    <string name="state_collapsed">Collapsed</string>
     <string name="action_open_link">Opens in browser</string>
 
     <!-- Errors (DomainError) -->

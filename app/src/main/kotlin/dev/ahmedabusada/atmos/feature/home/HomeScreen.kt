@@ -1,5 +1,7 @@
 package dev.ahmedabusada.atmos.feature.home
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -26,15 +28,21 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
@@ -220,29 +228,62 @@ private fun HourlyRow(hours: List<HourlyForecast>, settings: UserSettings, forma
     }
 }
 
+/**
+ * One day of the 7-day list. Tapping it shows sunrise and sunset (US-03). Whether a row is
+ * open is pure UI state: it lives here, in `rememberSaveable`, not in the ViewModel.
+ */
 @Composable
 private fun DailyRow(day: DailyForecast, isToday: Boolean, settings: UserSettings, format: WeatherFormatter) {
+    var expanded by rememberSaveable(day.date) { mutableStateOf(false) }
     val name = if (isToday) stringResource(R.string.home_today) else format.dayName(day.date.dayOfWeek)
     val min = format.temperature(day.minTemperature, settings.temperatureUnit)
     val max = format.temperature(day.maxTemperature, settings.temperatureUnit)
-    val description = "$name, ${stringResource(day.condition.labelRes())}, " +
-        stringResource(R.string.home_min_max, min, max)
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(AtmosTheme.spacing.medium),
+    val sunrise = day.sunrise
+    val sunset = day.sunset
+    val sunTimes = if (sunrise != null && sunset != null) {
+        stringResource(R.string.home_sunrise_sunset, format.hour(sunrise), format.hour(sunset))
+    } else {
+        null
+    }
+    val description = listOfNotNull(
+        name,
+        stringResource(day.condition.labelRes()),
+        stringResource(R.string.home_min_max, min, max),
+        sunTimes?.takeIf { expanded },
+    ).joinToString(", ")
+    val state = stringResource(if (expanded) R.string.state_expanded else R.string.state_collapsed)
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .height(AtmosTheme.spacing.touchTarget + AtmosTheme.spacing.small)
-            .clearAndSetSemantics { contentDescription = description },
+            .clickable(enabled = sunTimes != null, role = Role.Button) { expanded = !expanded }
+            .animateContentSize()
+            .clearAndSetSemantics {
+                contentDescription = description
+                if (sunTimes != null) stateDescription = state
+            },
     ) {
-        Text(name, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
-        WeatherIcon(day.condition.iconRes(), contentDescription = null)
-        Text(
-            min,
-            style = MaterialTheme.typography.bodyLarge.merge(TabularNumbers),
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        Text(max, style = MaterialTheme.typography.bodyLarge.merge(TabularNumbers))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(AtmosTheme.spacing.medium),
+            modifier = Modifier.fillMaxWidth().height(AtmosTheme.spacing.touchTarget + AtmosTheme.spacing.small),
+        ) {
+            Text(name, style = MaterialTheme.typography.bodyLarge, modifier = Modifier.weight(1f))
+            WeatherIcon(day.condition.iconRes(), contentDescription = null)
+            Text(
+                min,
+                style = MaterialTheme.typography.bodyLarge.merge(TabularNumbers),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Text(max, style = MaterialTheme.typography.bodyLarge.merge(TabularNumbers))
+        }
+        if (expanded && sunTimes != null) {
+            Text(
+                sunTimes,
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(bottom = AtmosTheme.spacing.small),
+            )
+        }
     }
 }
 
