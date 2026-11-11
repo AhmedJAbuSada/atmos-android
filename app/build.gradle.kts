@@ -58,6 +58,21 @@ android {
         buildConfig = true
     }
 
+    testOptions {
+        unitTests {
+            // Screenshot tests render real Compose UI on the JVM with Robolectric.
+            isIncludeAndroidResources = true
+            all { test ->
+                // Robolectric needs this JDK 17+ package opened (see data/build.gradle.kts).
+                test.jvmArgs("--add-opens=java.base/jdk.internal.access=ALL-UNNAMED")
+                // `./gradlew :app:testDebugUnitTest -PrecordScreenshots` writes the images
+                // to docs/screenshots; a normal test run renders but writes nothing.
+                test.systemProperty("roborazzi.test.record", project.hasProperty("recordScreenshots").toString())
+                test.systemProperty("atmos.screenshots.dir", "$rootDir/docs/screenshots")
+            }
+        }
+    }
+
     lint {
         warningsAsErrors = true
         abortOnError = true
@@ -101,6 +116,11 @@ dependencies {
     debugImplementation(libs.compose.ui.test.manifest)
 
     testImplementation(testFixtures(project(":domain")))
+    testImplementation(platform(libs.compose.bom))
+    testImplementation(libs.compose.ui.test.junit4)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.roborazzi)
+    testImplementation(libs.roborazzi.compose)
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.turbine)
