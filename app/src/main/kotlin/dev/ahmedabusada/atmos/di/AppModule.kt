@@ -1,10 +1,14 @@
 package dev.ahmedabusada.atmos.di
 
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.ahmedabusada.atmos.BuildConfig
+import dev.ahmedabusada.atmos.core.AppLanguageController
+import dev.ahmedabusada.atmos.core.AppLanguages
+import dev.ahmedabusada.atmos.core.CurrentLanguage
 import dev.ahmedabusada.atmos.data.di.UserAgent
 
 /** App-level values that only :app knows, such as its version. */
@@ -15,4 +19,14 @@ object AppModule {
     @Provides
     @UserAgent
     fun userAgent(): String = "Atmos/${BuildConfig.VERSION_NAME} (Android)"
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class AppBindings {
+    @Binds
+    abstract fun currentLanguage(impl: AppLanguages): CurrentLanguage
+
+    @Binds
+    abstract fun languageController(impl: AppLanguages): AppLanguageController
 }
