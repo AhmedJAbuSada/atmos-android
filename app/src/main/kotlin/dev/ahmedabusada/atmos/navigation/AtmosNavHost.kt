@@ -2,10 +2,10 @@ package dev.ahmedabusada.atmos.navigation
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.net.toUri
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -51,7 +51,7 @@ fun AtmosNavHost(modifier: Modifier = Modifier) {
                 versionName = BuildConfig.VERSION_NAME,
                 onOpenLink = { url ->
                     try {
-                        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                        context.startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
                     } catch (_: ActivityNotFoundException) {
                         // No browser installed: nothing sensible to do.
                     }
