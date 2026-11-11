@@ -3,6 +3,41 @@
 **A weather app built step by step, as a public tutorial on professional Android
 development with Clean Architecture and an AI coding agent.**
 
+<!-- step-banner:start -->
+## 📍 You are on Step 05 of 7 — Presentation: the views, before any data
+
+`step-05-presentation-ui` · [← Step 04](https://github.com/AhmedJAbuSada/atmos-android/tree/step-04-data-layer) · [Step 06 →](https://github.com/AhmedJAbuSada/atmos-android/tree/step-06-integration) · [All steps](docs/ROADMAP.md)
+
+**What this step is.** Every screen as a **stateless function of a UI state**, with realistic fake data and no ViewModel yet: a design system, Home/Cities/Settings/About in Compose, a locale-aware formatter, hand-made vector icons, strings in English/Turkish/Arabic, and previews of every state in light, dark, Arabic RTL and Turkish at 200% font.
+
+**Why it matters.** When a screen can only show what it is given, it can be designed, previewed and reviewed on its own, in every language, before the plumbing exists. Building the UI apart from the data is how teams work in parallel.
+
+**What you will find in this branch**
+
+| Where | What |
+|---|---|
+| `app/…/ui/theme/` | Colours, type, spacing tokens |
+| `app/…/ui/format/WeatherFormatter.kt` | `%69` in Turkish, Latin digits in Arabic |
+| `app/…/feature/*/…Screen.kt` | Stateless screens + previews |
+| `app/src/main/res/values*/strings.xml` | en, tr, ar (Arabic has 6 plural forms) |
+
+**How to study this step**
+
+1. **Read the full guide:** [docs/steps/05-presentation-ui.md](docs/steps/05-presentation-ui.md): key ideas, diagrams, and *how the AI agent helped* (including what went wrong).
+2. **See exactly what this step changed:** [compare with step 04](https://github.com/AhmedJAbuSada/atmos-android/compare/step-04-data-layer...step-05-presentation-ui).
+3. **Run it:**
+   ```bash
+   ./gradlew :app:testDebugUnitTest
+   ./gradlew :app:installDebug   # opens on demo data
+   ```
+4. **Try the exercise:** Preview the Home screen at 320 dp width in Arabic. What breaks first?
+
+> This README shows the project *as it was at this step*. The finished app is on
+> [`main`](https://github.com/AhmedJAbuSada/atmos-android).
+
+---
+<!-- step-banner:end -->
+
 ![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?logo=kotlin&logoColor=white)
 ![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-4285F4?logo=jetpackcompose&logoColor=white)
 ![Clean Architecture](https://img.shields.io/badge/Clean%20Architecture-3%20layers-success)
