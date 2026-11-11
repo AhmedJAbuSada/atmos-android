@@ -25,6 +25,12 @@ import kotlin.math.roundToInt
  * | Day | `Thursday` | `Perşembe` | `الخميس` |
  *
  * Arabic uses Western digits (0–9) by product decision (ADR-0005, point 7); see [forDisplay].
+ *
+ * Every value is wrapped in Unicode **directional isolates** (LRI … PDI). Inside an Arabic
+ * sentence, the bidi algorithm would otherwise reorder the neutral characters of a value:
+ * "Feels like 11°" became `°11 الإحساس` and "25 km/h" became `km/h 25` (found in the
+ * Arabic screenshot). Isolated, a value always reads left to right as one unit, in any
+ * sentence, in any language.
  */
 class WeatherFormatter(locale: Locale, private val use24HourClock: Boolean) {
     private val locale: Locale = forDisplay(locale)
@@ -38,7 +44,7 @@ class WeatherFormatter(locale: Locale, private val use24HourClock: Boolean) {
 
     /** `15°`. Whole degrees: decimals add noise, not information, to a weather glance. */
     fun temperature(value: Temperature, unit: TemperatureUnit): String =
-        integer.format(value.valueIn(unit).roundToInt()) + DEGREE
+        isolate(integer.format(value.valueIn(unit).roundToInt()) + DEGREE)
 
     /** `25 km/h`, `6,9 m/s` in Turkish, `15 mph`. Metres per second keep one decimal. */
     fun windSpeed(value: WindSpeed, unit: WindSpeedUnit): String {
@@ -47,14 +53,14 @@ class WeatherFormatter(locale: Locale, private val use24HourClock: Boolean) {
             WindSpeedUnit.MetersPerSecond -> oneDecimal.format(number)
             WindSpeedUnit.KilometersPerHour, WindSpeedUnit.MilesPerHour -> integer.format(number.roundToInt())
         }
-        return "$text ${unitSymbol(unit)}"
+        return isolate("$text ${unitSymbol(unit)}")
     }
 
     /** `69%`, `%69` in Turkish. */
-    fun percentage(value: Int): String = percent.format(value / PERCENT)
+    fun percentage(value: Int): String = isolate(percent.format(value / PERCENT))
 
     /** `14:00` or `2 PM`, following the device's 24-hour setting. */
-    fun hour(time: LocalDateTime): String = hourFormat.format(time)
+    fun hour(time: LocalDateTime): String = isolate(hourFormat.format(time))
 
     /** `Thursday`, `Perşembe`, `الخميس`. */
     fun dayName(day: DayOfWeek): String = day.getDisplayName(TextStyle.FULL, locale)
@@ -71,6 +77,13 @@ class WeatherFormatter(locale: Locale, private val use24HourClock: Boolean) {
 
     companion object {
         private const val DEGREE = "°"
+
+        /** Left-to-right isolate and pop directional isolate (Unicode UAX #9). */
+        private const val LRI = '\u2066'
+        private const val PDI = '\u2069'
+
+        /** Keeps [value] left to right and in one piece, whatever text surrounds it. */
+        fun isolate(value: String): String = "$LRI$value$PDI"
         private const val PERCENT = 100.0
 
         /**
