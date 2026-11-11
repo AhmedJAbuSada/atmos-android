@@ -3,6 +3,38 @@
 **A weather app built step by step, as a public tutorial on professional Android
 development with Clean Architecture and an AI coding agent.**
 
+<!-- step-banner:start -->
+## 📍 You are on Step 01 of 7 — Planning: documents before code
+
+`step-01-planning` · [Step 02 →](https://github.com/AhmedJAbuSada/atmos-android/tree/step-02-project-structure) · [All steps](docs/ROADMAP.md)
+
+**What this step is.** There is **no code** in this branch, on purpose. Before anyone writes code, the team agrees on *what* to build (requirements with IDs), *how we know it works* (acceptance criteria), *what the server really sends* (an API contract written against recorded responses), *how the code is organised* (Clean Architecture and decision records), and *how the team and the AI agent work* (Git workflow, Definition of Done, `AGENTS.md`).
+
+**Why it matters.** An hour of planning saves a week of rework. With an AI agent this matters even more: the agent builds exactly what you describe, so a vague description becomes vague software, fast. Every later step traces back to an ID in these documents.
+
+**What you will find in this branch**
+
+| Where | What |
+|---|---|
+| `docs/product/PRD.md` | What and why: goals, non-goals, requirements F-01…F-11, NF-01…NF-09 |
+| `docs/product/USER_STORIES.md` | Given/When/Then acceptance criteria; they become test names |
+| `docs/api/API_CONTRACT.md` | The Open-Meteo boundary, with real recorded responses in docs/api/samples |
+| `docs/architecture/` | Clean Architecture rules and six ADRs (one decision per file) |
+| `docs/process/` | Git workflow, coding standards, Definition of Done |
+| `AGENTS.md, docs/AI_WORKFLOW.md` | How to work with an AI coding agent professionally |
+
+**How to study this step**
+
+1. **Read the full guide:** [docs/steps/01-planning.md](docs/steps/01-planning.md): key ideas, diagrams, and *how the AI agent helped* (including what went wrong).
+2. **Read in this order:** PRD → user stories → API contract → architecture → ADRs → AGENTS.md.
+3. **Try the exercise:** Add a user story for a non-goal (for example a home-screen widget). Which requirement ID does it need? Which ADR might it change?
+
+> This README shows the project *as it was at this step*. The finished app is on
+> [`main`](https://github.com/AhmedJAbuSada/atmos-android).
+
+---
+<!-- step-banner:end -->
+
 ![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?logo=kotlin&logoColor=white)
 ![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-4285F4?logo=jetpackcompose&logoColor=white)
 ![Clean Architecture](https://img.shields.io/badge/Clean%20Architecture-3%20layers-success)
