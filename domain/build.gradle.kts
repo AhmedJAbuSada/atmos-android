@@ -9,6 +9,18 @@ kotlin {
     jvmToolchain(21)
 }
 
+// The domain holds the business rules, so it has the highest coverage bar (NF-05).
+// `./gradlew :domain:koverVerify` fails the build below 90% line coverage.
+kover {
+    reports {
+        verify {
+            rule {
+                minBound(90)
+            }
+        }
+    }
+}
+
 dependencies {
     api(libs.kotlinx.coroutines.core)
     api(libs.javax.inject) // only the @Inject annotation, so Hilt can build use cases

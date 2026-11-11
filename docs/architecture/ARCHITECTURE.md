@@ -64,7 +64,7 @@ domain/src/main/kotlin/dev/ahmedabusada/atmos/domain/
 ├── weather/      Forecast, CurrentWeather, WeatherCondition, GetForecastUseCase …
 ├── location/     Coordinates, City, SearchCitiesUseCase …
 ├── settings/     UserSettings, TemperatureUnit, …
-└── common/       AppResult, DomainError, Clock abstraction
+└── common/       AppResult, DomainError, runCatchingDomain
 ```
 
 The same `weather/`, `location/`, `settings/` folders appear in `:data` and `:app`.
@@ -108,8 +108,8 @@ sequenceDiagram
 - **Repository interfaces** speak in entities, never DTOs.
 - Errors are values: functions return `AppResult<T>` (success or `DomainError`). No
   exceptions cross a layer boundary (ADR-0006).
-- Time comes from an injected `Clock`, never `System.currentTimeMillis()`, so tests can
-  control it.
+- Time comes from an injected `java.time.Clock`, never `System.currentTimeMillis()` or
+  `Instant.now()`, so tests can control it with `Clock.fixed(...)`.
 
 ### Data
 - **DTOs** mirror the JSON exactly and live only in `:data`. Every field is nullable.
