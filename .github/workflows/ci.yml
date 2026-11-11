@@ -6,7 +6,8 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [main]
+    # main, plus the tutorial's step branches, so every snapshot is verified too.
+    branches: [main, "step-*"]
 
 # A new push to the same branch cancels the previous run, which saves CI minutes.
 concurrency:
@@ -48,8 +49,8 @@ jobs:
       - name: Unit tests
         run: ./gradlew test
 
-      - name: Domain coverage ≥ 90%
-        run: ./gradlew :domain:koverVerify
+      - name: Coverage gates (domain ≥ 90%, data ≥ 80%)
+        run: ./gradlew :domain:koverVerify :data:koverVerify
 
       - name: Build debug APK
         run: ./gradlew assembleDebug
