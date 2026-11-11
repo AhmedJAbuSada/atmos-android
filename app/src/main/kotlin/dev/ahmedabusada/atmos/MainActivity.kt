@@ -1,36 +1,35 @@
 package dev.ahmedabusada.atmos
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
-import dev.ahmedabusada.atmos.domain.settings.UserSettings
-import dev.ahmedabusada.atmos.feature.home.HomeScreen
-import dev.ahmedabusada.atmos.feature.home.HomeUiState
-import dev.ahmedabusada.atmos.ui.preview.PreviewData
+import dev.ahmedabusada.atmos.domain.settings.AppTheme
+import dev.ahmedabusada.atmos.navigation.AtmosNavHost
 import dev.ahmedabusada.atmos.ui.theme.AtmosTheme
 
 /**
- * Single activity. In step 05 it shows the Home screen with **preview data**, so the
- * views can be checked on a device before any real data is connected. Step 06 replaces
- * this with navigation and ViewModels.
+ * Single activity: applies the theme setting and hosts the navigation graph.
+ *
+ * It is an `AppCompatActivity` only for the per-app language API on Android 8–12
+ * (ADR-0005); on 13+ the system handles it. The language is applied by Settings, never
+ * here: re-applying it at start-up would undo a choice made in the system settings.
  */
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
+    private val viewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            AtmosTheme {
-                HomeScreen(
-                    state = HomeUiState.Content(
-                        placeName = PreviewData.istanbul.name,
-                        forecast = PreviewData.forecast,
-                        settings = UserSettings(),
-                    ),
-                    onEvent = {},
-                )
+            val settings by viewModel.settings.collectAsStateWithLifecycle()
+            AtmosTheme(appTheme = settings?.theme ?: AppTheme.System) {
+                AtmosNavHost()
             }
         }
     }
