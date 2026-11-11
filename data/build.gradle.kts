@@ -30,9 +30,10 @@ android {
             // Robolectric needs Android resources to run Room on the JVM.
             isIncludeAndroidResources = true
             all { test ->
-                // Robolectric reads JDK internals (java.io.FileDescriptor) by reflection,
-                // which JDK 17+ blocks unless the package is opened explicitly.
-                test.jvmArgs("--add-opens=java.base/java.io=ALL-UNNAMED")
+                // Robolectric (SDK 36) sets up shared memory through JDK internals
+                // (jdk.internal.access.SharedSecrets), which JDK 17+ hides unless the
+                // package is opened explicitly. Found through the CI failure annotation.
+                test.jvmArgs("--add-opens=java.base/jdk.internal.access=ALL-UNNAMED")
             }
         }
     }
