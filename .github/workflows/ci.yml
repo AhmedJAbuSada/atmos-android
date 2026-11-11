@@ -122,10 +122,7 @@ jobs:
           target: google_apis
           arch: x86_64
           disable-animations: true
-          # Output goes to a log too, so a failure can be reported below.
-          script: |
-            ./gradlew connectedDebugAndroidTest 2>&1 | tee device.log; test ${PIPESTATUS[0]} -eq 0
-            ./scripts/release-smoke-test.sh 2>&1 | tee -a device.log; test ${PIPESTATUS[0]} -eq 0
+          script: ./scripts/device-tests.sh
 
       - name: Annotate device failures
         if: failure()
