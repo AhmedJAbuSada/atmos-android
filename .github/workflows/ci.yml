@@ -35,7 +35,7 @@ jobs:
 
       # Validates the Gradle wrapper and caches dependencies between runs.
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v5
+        uses: gradle/actions/setup-gradle@v6
 
       - name: Format (Spotless / ktlint)
         run: ./gradlew spotlessCheck
@@ -106,7 +106,7 @@ jobs:
           java-version: "21"
 
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v5
+        uses: gradle/actions/setup-gradle@v6
 
       # Hardware acceleration for the emulator on GitHub's Linux runners.
       - name: Enable KVM
@@ -176,7 +176,7 @@ jobs:
           java-version: "21"
 
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v5
+        uses: gradle/actions/setup-gradle@v6
 
       - name: Record
         run: ./gradlew :app:testDebugUnitTest --tests "*ScreenshotTest" -PrecordScreenshots
