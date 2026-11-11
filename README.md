@@ -3,6 +3,42 @@
 **A weather app built step by step, as a public tutorial on professional Android
 development with Clean Architecture and an AI coding agent.**
 
+<!-- step-banner:start -->
+## 📍 You are on Step 04 of 7 — Data layer: the app's backend on the phone
+
+`step-04-data-layer` · [← Step 03](https://github.com/AhmedJAbuSada/atmos-android/tree/step-03-domain-layer) · [Step 05 →](https://github.com/AhmedJAbuSada/atmos-android/tree/step-05-presentation-ui) · [All steps](docs/ROADMAP.md)
+
+**What this step is.** Everything that talks to the outside world, behind the domain's interfaces: Retrofit DTOs that mirror the JSON, mappers tested against the *real recorded* API responses, retry and timeout rules, a Room cache and saved cities, DataStore settings, coarse location, and Hilt bindings from interface to implementation.
+
+**Why it matters.** DTOs change when the API changes; entities change when the product changes. Keeping them apart, and translating errors once at the edge, means the rest of the app never sees `HttpException` or a JSON field name.
+
+**What you will find in this branch**
+
+| Where | What |
+|---|---|
+| `data/…/remote/` | DTOs, Retrofit APIs, OkHttp rules, error mapping |
+| `data/…/mapper/` | DTO → domain entities |
+| `data/…/local/` | Room database, cache key (Locale.ROOT!) |
+| `data/…/repository/` | Implementations of the domain interfaces |
+| `data/src/test/` | Tests reading docs/api/samples directly |
+
+**How to study this step**
+
+1. **Read the full guide:** [docs/steps/04-data-layer.md](docs/steps/04-data-layer.md): key ideas, diagrams, and *how the AI agent helped* (including what went wrong).
+2. **See exactly what this step changed:** [compare with step 03](https://github.com/AhmedJAbuSada/atmos-android/compare/step-03-domain-layer...step-04-data-layer).
+3. **Run it:**
+   ```bash
+   ./gradlew :data:testDebugUnitTest
+   ./gradlew :data:koverVerify
+   ```
+4. **Try the exercise:** Add `uv_index_max` to the daily forecast end to end: DTO → mapper → entity → a test with a new recorded sample.
+
+> This README shows the project *as it was at this step*. The finished app is on
+> [`main`](https://github.com/AhmedJAbuSada/atmos-android).
+
+---
+<!-- step-banner:end -->
+
 ![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?logo=kotlin&logoColor=white)
 ![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-4285F4?logo=jetpackcompose&logoColor=white)
 ![Clean Architecture](https://img.shields.io/badge/Clean%20Architecture-3%20layers-success)
