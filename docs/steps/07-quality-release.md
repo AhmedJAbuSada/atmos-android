@@ -82,7 +82,7 @@ val releaseKeystore = System.getenv("ATMOS_KEYSTORE_PATH")
 ```
 The release key and its passwords come from the environment (a developer's shell or CI
 secrets). Without them, the release build is simply unsigned, which is enough to check that
-it builds and shrinks. The emulator smoke test signs it with the throw-away debug key only to
+it builds and shrinks. The emulator smoke test signs it with a throw-away key only to
 install it.
 
 ### 6. Pseudo-locales: test translations without translators
