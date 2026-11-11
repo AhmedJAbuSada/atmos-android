@@ -17,6 +17,8 @@ import dagger.hilt.components.SingletonComponent
 import dev.ahmedabusada.atmos.data.local.AtmosDatabase
 import dev.ahmedabusada.atmos.data.local.ForecastCacheDao
 import dev.ahmedabusada.atmos.data.local.SavedCityDao
+import dev.ahmedabusada.atmos.data.location.AndroidLocationPermission
+import dev.ahmedabusada.atmos.data.location.LocationPermission
 import dev.ahmedabusada.atmos.data.location.LocationRepositoryImpl
 import dev.ahmedabusada.atmos.data.remote.ForecastApi
 import dev.ahmedabusada.atmos.data.remote.GeocodingApi
@@ -54,6 +56,9 @@ internal abstract class RepositoryModule {
 
     @Binds
     abstract fun settings(impl: SettingsRepositoryImpl): SettingsRepository
+
+    @Binds
+    abstract fun locationPermission(impl: AndroidLocationPermission): LocationPermission
 }
 
 @Module

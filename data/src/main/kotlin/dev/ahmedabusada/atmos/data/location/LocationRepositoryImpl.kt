@@ -1,13 +1,8 @@
 package dev.ahmedabusada.atmos.data.location
 
-import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.pm.PackageManager
-import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.ahmedabusada.atmos.domain.common.AppResult
 import dev.ahmedabusada.atmos.domain.common.DomainError
 import dev.ahmedabusada.atmos.domain.common.runCatchingDomain
@@ -24,13 +19,13 @@ import javax.inject.Inject
  * only checks it, so it never shows a dialog by itself.
  */
 internal class LocationRepositoryImpl @Inject constructor(
-    @param:ApplicationContext private val context: Context,
+    private val permission: LocationPermission,
     private val client: FusedLocationProviderClient,
 ) : LocationRepository {
     // The permission is checked on the line above each call, which lint cannot see.
     @SuppressLint("MissingPermission")
     override suspend fun getCurrentLocation(): AppResult<Coordinates> {
-        if (!hasPermission()) return AppResult.Failure(DomainError.LocationPermissionDenied)
+        if (!permission.isGranted()) return AppResult.Failure(DomainError.LocationPermissionDenied)
 
         return runCatchingDomain(mapError = { DomainError.LocationUnavailable }) {
             val location = client.getCurrentLocation(Priority.PRIORITY_BALANCED_POWER_ACCURACY, null).await()
@@ -39,8 +34,4 @@ internal class LocationRepositoryImpl @Inject constructor(
             Coordinates(location.latitude, location.longitude)
         }
     }
-
-    private fun hasPermission(): Boolean =
-        ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) ==
-            PackageManager.PERMISSION_GRANTED
 }
