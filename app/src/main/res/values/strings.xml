@@ -1,5 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">Atmos</string>
-    <string name="hello_atmos">Hello, Atmos</string>
+
+    <!-- Weather conditions (WeatherCondition) -->
+    <string name="condition_clear">Clear</string>
+    <string name="condition_mainly_clear">Mainly clear</string>
+    <string name="condition_partly_cloudy">Partly cloudy</string>
+    <string name="condition_overcast">Overcast</string>
+    <string name="condition_fog">Fog</string>
+    <string name="condition_drizzle">Drizzle</string>
+    <string name="condition_freezing_drizzle">Freezing drizzle</string>
+    <string name="condition_rain">Rain</string>
+    <string name="condition_freezing_rain">Freezing rain</string>
+    <string name="condition_snow">Snow</string>
+    <string name="condition_rain_showers">Rain showers</string>
+    <string name="condition_snow_showers">Snow showers</string>
+    <string name="condition_thunderstorm">Thunderstorm</string>
+    <string name="condition_thunderstorm_hail">Thunderstorm with hail</string>
+    <string name="condition_unknown">Unknown conditions</string>
+
+    <!-- Home -->
+    <string name="home_feels_like">Feels like %1$s</string>
+    <string name="home_humidity">Humidity %1$s</string>
+    <string name="home_wind">Wind %1$s</string>
+    <string name="home_next_24_hours">Next 24 hours</string>
+    <string name="home_next_7_days">Next 7 days</string>
+    <string name="home_now">Now</string>
+    <string name="home_today">Today</string>
+    <string name="home_precipitation_chance">%1$s chance of precipitation</string>
+    <string name="home_min_max">Low %1$s, high %2$s</string>
+    <string name="home_sunrise_sunset">Sunrise %1$s · Sunset %2$s</string>
+    <string name="home_current_location">Current location</string>
+    <string name="home_attribution">Weather data by Open-Meteo.com</string>
+    <string name="home_open_cities">Cities</string>
+    <string name="home_open_settings">Settings</string>
+    <string name="home_no_location_title">Where are you?</string>
+    <string name="home_no_location_message">Allow location access to see the weather where you are, or search for a city.</string>
+    <string name="home_allow_location">Allow location</string>
+    <string name="home_search_city">Search for a city</string>
+    <plurals name="home_updated_minutes_ago">
+        <item quantity="one">Updated %d minute ago</item>
+        <item quantity="other">Updated %d minutes ago</item>
+    </plurals>
+    <plurals name="home_updated_hours_ago">
+        <item quantity="one">Updated %d hour ago</item>
+        <item quantity="other">Updated %d hours ago</item>
+    </plurals>
+    <plurals name="home_updated_days_ago">
+        <item quantity="one">Updated %d day ago</item>
+        <item quantity="other">Updated %d days ago</item>
+    </plurals>
+
+    <!-- Cities -->
+    <string name="cities_title">Cities</string>
+    <string name="cities_search_hint">Search city</string>
+    <string name="cities_clear_search">Clear search</string>
+    <string name="cities_add">Add %1$s</string>
+    <string name="cities_remove">Remove %1$s</string>
+    <string name="cities_removed">%1$s removed</string>
+    <string name="cities_undo">Undo</string>
+    <string name="cities_no_results">No cities found</string>
+    <string name="cities_already_saved">%1$s is already in your list</string>
+    <string name="cities_empty_saved">Search for a city to add it here.</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_temperature">Temperature</string>
+    <string name="settings_wind_speed">Wind speed</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_about">About</string>
+    <string name="unit_celsius" translatable="false">°C</string>
+    <string name="unit_fahrenheit" translatable="false">°F</string>
+    <string name="unit_kmh" translatable="false">km/h</string>
+    <string name="unit_ms" translatable="false">m/s</string>
+    <string name="unit_mph" translatable="false">mph</string>
+    <string name="language_system">System default</string>
+    <!-- Each language is written in its own language, so a user can always find theirs. -->
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_turkish" translatable="false">Türkçe</string>
+    <string name="language_arabic" translatable="false">العربية</string>
+    <string name="theme_system">System default</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+
+    <!-- About -->
+    <string name="about_title">About</string>
+    <string name="about_version">Version %1$s</string>
+    <string name="about_data_source">Weather data by Open-Meteo.com</string>
+    <string name="about_source_code">Source code on GitHub</string>
+    <string name="about_license">License: MIT</string>
+
+    <!-- Common -->
+    <string name="action_back">Back</string>
+    <string name="action_retry">Try again</string>
+    <string name="action_open_link">Opens in browser</string>
+
+    <!-- Errors (DomainError) -->
+    <string name="error_no_connection">You\'re offline. Check your connection and try again.</string>
+    <string name="error_timeout">The weather service is taking too long to answer.</string>
+    <string name="error_server">The weather service has a problem right now. Please try again later.</string>
+    <string name="error_not_found">We couldn\'t find that place.</string>
+    <string name="error_location_denied">Location access is off.</string>
+    <string name="error_location_unavailable">We couldn\'t find your location. Try again outdoors or search for a city.</string>
+    <string name="error_unknown">Something went wrong. Please try again.</string>
 </resources>

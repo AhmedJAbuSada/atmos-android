@@ -1,4 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello_atmos">Merhaba, Atmos</string>
+    <!-- Hava durumu -->
+    <string name="condition_clear">Açık</string>
+    <string name="condition_mainly_clear">Çoğunlukla açık</string>
+    <string name="condition_partly_cloudy">Parçalı bulutlu</string>
+    <string name="condition_overcast">Kapalı</string>
+    <string name="condition_fog">Sisli</string>
+    <string name="condition_drizzle">Çisenti</string>
+    <string name="condition_freezing_drizzle">Donan çisenti</string>
+    <string name="condition_rain">Yağmurlu</string>
+    <string name="condition_freezing_rain">Donan yağmur</string>
+    <string name="condition_snow">Karlı</string>
+    <string name="condition_rain_showers">Sağanak yağış</string>
+    <string name="condition_snow_showers">Kar sağanağı</string>
+    <string name="condition_thunderstorm">Gök gürültülü fırtına</string>
+    <string name="condition_thunderstorm_hail">Dolulu gök gürültülü fırtına</string>
+    <string name="condition_unknown">Bilinmeyen durum</string>
+
+    <!-- Ana ekran -->
+    <string name="home_feels_like">Hissedilen %1$s</string>
+    <string name="home_humidity">Nem %1$s</string>
+    <string name="home_wind">Rüzgâr %1$s</string>
+    <string name="home_next_24_hours">Önümüzdeki 24 saat</string>
+    <string name="home_next_7_days">Önümüzdeki 7 gün</string>
+    <string name="home_now">Şimdi</string>
+    <string name="home_today">Bugün</string>
+    <string name="home_precipitation_chance">Yağış olasılığı %1$s</string>
+    <string name="home_min_max">En düşük %1$s, en yüksek %2$s</string>
+    <string name="home_sunrise_sunset">Gün doğumu %1$s · Gün batımı %2$s</string>
+    <string name="home_current_location">Mevcut konum</string>
+    <string name="home_attribution">Hava durumu verileri: Open-Meteo.com</string>
+    <string name="home_open_cities">Şehirler</string>
+    <string name="home_open_settings">Ayarlar</string>
+    <string name="home_no_location_title">Neredesiniz?</string>
+    <string name="home_no_location_message">Bulunduğunuz yerin hava durumunu görmek için konum erişimine izin verin veya bir şehir arayın.</string>
+    <string name="home_allow_location">Konuma izin ver</string>
+    <string name="home_search_city">Şehir ara</string>
+    <plurals name="home_updated_minutes_ago">
+        <item quantity="one">%d dakika önce güncellendi</item>
+        <item quantity="other">%d dakika önce güncellendi</item>
+    </plurals>
+    <plurals name="home_updated_hours_ago">
+        <item quantity="one">%d saat önce güncellendi</item>
+        <item quantity="other">%d saat önce güncellendi</item>
+    </plurals>
+    <plurals name="home_updated_days_ago">
+        <item quantity="one">%d gün önce güncellendi</item>
+        <item quantity="other">%d gün önce güncellendi</item>
+    </plurals>
+
+    <!-- Şehirler -->
+    <string name="cities_title">Şehirler</string>
+    <string name="cities_search_hint">Şehir ara</string>
+    <string name="cities_clear_search">Aramayı temizle</string>
+    <string name="cities_add">%1$s ekle</string>
+    <string name="cities_remove">%1$s kaldır</string>
+    <string name="cities_removed">%1$s kaldırıldı</string>
+    <string name="cities_undo">Geri al</string>
+    <string name="cities_no_results">Şehir bulunamadı</string>
+    <string name="cities_already_saved">%1$s zaten listenizde</string>
+    <string name="cities_empty_saved">Buraya eklemek için bir şehir arayın.</string>
+
+    <!-- Ayarlar -->
+    <string name="settings_title">Ayarlar</string>
+    <string name="settings_temperature">Sıcaklık</string>
+    <string name="settings_wind_speed">Rüzgâr hızı</string>
+    <string name="settings_language">Dil</string>
+    <string name="settings_theme">Tema</string>
+    <string name="settings_about">Hakkında</string>
+    <string name="language_system">Sistem varsayılanı</string>
+    <string name="theme_system">Sistem varsayılanı</string>
+    <string name="theme_light">Açık</string>
+    <string name="theme_dark">Koyu</string>
+
+    <!-- Hakkında -->
+    <string name="about_title">Hakkında</string>
+    <string name="about_version">Sürüm %1$s</string>
+    <string name="about_data_source">Hava durumu verileri: Open-Meteo.com</string>
+    <string name="about_source_code">GitHub\'da kaynak kodu</string>
+    <string name="about_license">Lisans: MIT</string>
+
+    <!-- Genel -->
+    <string name="action_back">Geri</string>
+    <string name="action_retry">Tekrar dene</string>
+    <string name="action_open_link">Tarayıcıda açılır</string>
+
+    <!-- Hatalar -->
+    <string name="error_no_connection">Çevrimdışısınız. Bağlantınızı kontrol edip tekrar deneyin.</string>
+    <string name="error_timeout">Hava durumu servisi çok geç yanıt veriyor.</string>
+    <string name="error_server">Hava durumu servisinde şu anda bir sorun var. Lütfen daha sonra tekrar deneyin.</string>
+    <string name="error_not_found">Bu yeri bulamadık.</string>
+    <string name="error_location_denied">Konum erişimi kapalı.</string>
+    <string name="error_location_unavailable">Konumunuzu bulamadık. Açık havada tekrar deneyin veya bir şehir arayın.</string>
+    <string name="error_unknown">Bir şeyler ters gitti. Lütfen tekrar deneyin.</string>
 </resources>
