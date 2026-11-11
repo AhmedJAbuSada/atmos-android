@@ -31,7 +31,7 @@ flowchart LR
 | 2. Plan | AI drafts, human edits | A list of files to change, tests to write, risks |
 | 3. Review the plan | Human | Approval *before* any code. Fixing a plan is cheap; fixing code is not. |
 | 4. Build | AI | Small commits, tests written together with the code |
-| 5. Verify | Tools | `./gradlew spotlessCheck detekt lint test` + CI. Machines check what machines can. |
+| 5. Verify | Tools | `./gradlew spotlessCheck checkLocaleSafeCasing lint test` + CI. Machines check what machines can. |
 | 6. Review | AI first, then a human | The AI catches the obvious; the human checks intent, design and edge cases. |
 | 7. Merge | Human | Green CI, an approval, an updated `PROGRESS.md` |
 
@@ -110,7 +110,7 @@ human code, applied every time:
    use these exact files.
 2. **Tests prove behaviour.** The agent must show test output, not say "tests pass".
 3. **Tools enforce rules.** Gradle modules make an architecture violation a *compile
-   error*. detekt makes `uppercase()` without a locale a *build error*. Then nobody has
+   error*. A small Gradle task makes `uppercase()` without a locale a *build error*. Then nobody has
    to remember.
 4. **Small diffs.** A 2,000-line AI-generated PR cannot be reviewed properly. Keep each
    prompt to a scope that produces a diff you can read in 10 minutes.

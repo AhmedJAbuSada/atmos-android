@@ -8,7 +8,7 @@ written by a person and code written by an AI agent.
 - [ ] Follows the [architecture rules](../architecture/ARCHITECTURE.md) and
       [coding standards](CODING_STANDARDS.md).
 - [ ] No hard-coded user-facing strings; English, Turkish and Arabic added.
-- [ ] No new warnings from lint or detekt.
+- [ ] No new warnings from Android Lint; `spotlessCheck` and `checkLocaleSafeCasing` pass.
 
 ## Tests
 - [ ] Unit tests for new logic, including at least one **failure** path.

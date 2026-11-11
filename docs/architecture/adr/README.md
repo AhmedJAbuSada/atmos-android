@@ -15,5 +15,6 @@ ADR *supersedes* the old one, so the history of *why* is never lost.
 | [0004](0004-hilt-retrofit-room-datastore.md) | Hilt, Retrofit + kotlinx.serialization, Room, DataStore | Accepted |
 | [0005](0005-localization-en-tr-ar.md) | Localization: English, Turkish, Arabic (RTL) | Accepted |
 | [0006](0006-errors-as-values.md) | Errors as values (`AppResult`) instead of exceptions | Accepted |
+| [0007](0007-static-analysis-without-detekt.md) | Static analysis: ktlint + Android Lint + a custom casing check, no detekt (for now) | Accepted |
 
 Template: copy [`template.md`](template.md).

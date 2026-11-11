@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 6–11. The forecast cache database is excluded once it exists (step 04). -->
+<full-backup-content />
