@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!--
-        Backup: settings and saved cities are worth restoring on a new phone; the
-        forecast cache is not (it is re-downloaded). Rules: res/xml/backup_rules.xml
-        (Android 6–11) and res/xml/data_extraction_rules.xml (Android 12+).
+        Backup: settings and saved cities are restored on a new phone. Rules:
+        res/xml/backup_rules.xml (Android 6–11), res/xml/data_extraction_rules.xml (12+).
         localeConfig: per-app language picker in system settings (Android 13+; older
         versions use the in-app picker only, ADR-0005).
     -->

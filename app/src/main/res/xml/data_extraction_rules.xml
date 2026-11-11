@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Android 12+. The forecast cache database is excluded once it exists (step 04). -->
+<!-- Android 12+. Same policy as backup_rules.xml: settings and saved cities are restored. -->
 <data-extraction-rules>
     <cloud-backup />
     <device-transfer />

@@ -1,3 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Android 6–11. The forecast cache database is excluded once it exists (step 04). -->
+<!--
+    Android 6–11. Everything is backed up: settings (DataStore) and atmos.db, which holds
+    the saved cities and the forecast cache. A restored cache is old by definition, so the
+    app simply refreshes it (GetForecastUseCase); splitting it into a second database
+    only to exclude it from backup would not be worth the complexity.
+-->
 <full-backup-content />
