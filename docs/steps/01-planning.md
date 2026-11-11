@@ -1,6 +1,6 @@
 # Step 01 — Planning: documents before code
 
-**Branch:** `step-01-planning` · **Tag:** `v0.1.0` · **Next:** step 02, project structure
+**Branch:** `step-01-planning` · **Tag:** `v0.1.0` · **Next:** [step 02, project structure](02-project-structure.md)
 
 There is no code in this step, on purpose. A professional project starts by agreeing on
 **what** to build, **why**, and **how the team will work**. An hour here saves a week of

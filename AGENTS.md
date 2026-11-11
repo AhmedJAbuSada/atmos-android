@@ -42,7 +42,7 @@ Full rules: [`docs/architecture/ARCHITECTURE.md`](docs/architecture/ARCHITECTURE
   Do not invent API responses.
 - Run before saying "done":
   ```bash
-  ./gradlew spotlessCheck detekt lint test
+  ./gradlew spotlessCheck checkLocaleSafeCasing lint test
   ```
   If you cannot run them, **say so**. Never claim tests pass without running them.
 

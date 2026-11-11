@@ -9,7 +9,9 @@ development with Clean Architecture and an AI coding agent.**
 ![Languages](https://img.shields.io/badge/i18n-EN%20%7C%20TR%20%7C%20AR%20(RTL)-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-> 🚧 **In progress:** step 01 of 7 is done. Follow along in [PROGRESS.md](docs/PROGRESS.md).
+[![CI](https://github.com/AhmedJAbuSada/atmos-android/actions/workflows/ci.yml/badge.svg)](https://github.com/AhmedJAbuSada/atmos-android/actions/workflows/ci.yml)
+
+> 🚧 **In progress:** steps 01–02 of 7 are done. Follow along in [PROGRESS.md](docs/PROGRESS.md).
 
 ## Why this repository exists
 
@@ -20,7 +22,7 @@ explained:
 | Step | Branch | What you learn |
 |---|---|---|
 | 01 | [`step-01-planning`](../../tree/step-01-planning) | PRD, user stories, API contract, architecture, ADRs, team process, AI agent rules |
-| 02 | `step-02-project-structure` | Gradle modules that enforce Clean Architecture, DI, linting, CI |
+| 02 | [`step-02-project-structure`](../../tree/step-02-project-structure) | Gradle modules that enforce Clean Architecture, DI, linting, CI |
 | 03 | `step-03-domain-layer` | Entities, use cases, errors as values, pure unit tests |
 | 04 | `step-04-data-layer` | Retrofit, mappers, Room cache, DataStore, cache-first repositories |
 | 05 | `step-05-presentation-ui` | Design system, Compose screens, ViewModels, previews (dark, RTL) |
@@ -80,6 +82,22 @@ the whole method, not just the result:
 - Every step guide ends with **"How the AI agent helped in this step"**, including what
   went wrong.
 - Commits written with the agent carry a `Co-Authored-By: Claude` line.
+
+## Run it
+
+Requirements: Android Studio (latest stable), or JDK 21 plus the Android SDK.
+
+```bash
+git clone https://github.com/AhmedJAbuSada/atmos-android.git
+cd atmos-android
+./gradlew assembleDebug
+```
+
+Quality checks, the same ones CI runs:
+
+```bash
+./gradlew spotlessCheck checkLocaleSafeCasing lint test
+```
 
 ## Start reading
 

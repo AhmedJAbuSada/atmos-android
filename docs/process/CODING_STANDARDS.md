@@ -8,11 +8,11 @@ machine can check should never need a human reviewer.
 | Tool | Checks | Runs |
 |---|---|---|
 | **ktlint** (via Spotless) | Formatting | `./gradlew spotlessCheck`; auto-fix with `spotlessApply` |
-| **detekt** | Code smells, complexity, forbidden calls | `./gradlew detekt` |
+| **checkLocaleSafeCasing** | Text casing without an explicit `Locale` (ADR-0005) | `./gradlew checkLocaleSafeCasing` (also part of `check`) |
 | **Android Lint** | Android-specific issues, hard-coded strings, RTL | `./gradlew lint` |
 | **Unit tests** | Behaviour | `./gradlew test` |
 
-All four run in CI on every pull request.
+All four run in CI on every pull request. Why there is no detekt: [ADR-0007](../architecture/adr/0007-static-analysis-without-detekt.md).
 
 ## Naming
 
@@ -36,7 +36,7 @@ All four run in CI on every pull request.
   `Dispatchers.IO` inside a class without a way to replace it in tests.
 - Always rethrow `CancellationException`.
 - Text casing always takes a locale: `uppercase(locale)`. **Never** the no-argument
-  version (Turkish `i` bug; detekt rule).
+  version (Turkish `i` bug; enforced by `checkLocaleSafeCasing`).
 - No magic numbers: `const val CACHE_TTL_MINUTES = 30`.
 - Functions under ~30 lines; classes with one responsibility.
 
