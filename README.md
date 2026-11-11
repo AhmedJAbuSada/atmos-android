@@ -3,6 +3,41 @@
 **A weather app built step by step, as a public tutorial on professional Android
 development with Clean Architecture and an AI coding agent.**
 
+<!-- step-banner:start -->
+## 📍 You are on Step 03 of 7 — Domain layer: the business rules, in plain code
+
+`step-03-domain-layer` · [← Step 02](https://github.com/AhmedJAbuSada/atmos-android/tree/step-02-project-structure) · [Step 04 →](https://github.com/AhmedJAbuSada/atmos-android/tree/step-04-data-layer) · [All steps](docs/ROADMAP.md)
+
+**What this step is.** The heart of the app in plain Kotlin: entities (`Forecast`, `City`), value classes for units, repository *interfaces*, use cases with the business rules (cache freshness, offline fallback, search rules, no duplicate cities), errors as values (`AppResult`), and 43 fast tests, one per acceptance criterion.
+
+**Why it matters.** Business rules change least and matter most. With no framework imports they are tested in milliseconds, and the network or database can be replaced without touching a single rule. The domain *declares* what it needs; other layers provide it (Dependency Inversion).
+
+**What you will find in this branch**
+
+| Where | What |
+|---|---|
+| `domain/src/main/…/common/` | AppResult, DomainError, runCatchingDomain |
+| `domain/src/main/…/weather/GetForecastUseCase.kt` | Cache-first logic as a decision table |
+| `domain/src/main/…/location/` | Cities, places, search/save/remove use cases |
+| `domain/src/test/` | 43 tests; fakes instead of mocks |
+
+**How to study this step**
+
+1. **Read the full guide:** [docs/steps/03-domain-layer.md](docs/steps/03-domain-layer.md): key ideas, diagrams, and *how the AI agent helped* (including what went wrong).
+2. **See exactly what this step changed:** [compare with step 02](https://github.com/AhmedJAbuSada/atmos-android/compare/step-02-project-structure...step-03-domain-layer).
+3. **Run it:**
+   ```bash
+   ./gradlew :domain:test
+   ./gradlew :domain:koverVerify   # fails below 90% coverage
+   ```
+4. **Try the exercise:** Add a rule: wind above 40 km/h shows a "Windy" warning. Which layer owns it? Write the test first.
+
+> This README shows the project *as it was at this step*. The finished app is on
+> [`main`](https://github.com/AhmedJAbuSada/atmos-android).
+
+---
+<!-- step-banner:end -->
+
 ![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?logo=kotlin&logoColor=white)
 ![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-4285F4?logo=jetpackcompose&logoColor=white)
 ![Clean Architecture](https://img.shields.io/badge/Clean%20Architecture-3%20layers-success)
