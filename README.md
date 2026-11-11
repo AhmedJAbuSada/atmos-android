@@ -4,39 +4,11 @@
 development with Clean Architecture and an AI coding agent.**
 
 <!-- step-banner:start -->
-## 📍 You are on Step 04 of 7 — Data layer: the app's backend on the phone
-
-`step-04-data-layer` · [← Step 03](https://github.com/AhmedJAbuSada/atmos-android/tree/step-03-domain-layer) · [Step 05 →](https://github.com/AhmedJAbuSada/atmos-android/tree/step-05-presentation-ui) · [All steps](docs/ROADMAP.md)
-
-**What this step is.** Everything that talks to the outside world, behind the domain's interfaces: Retrofit DTOs that mirror the JSON, mappers tested against the *real recorded* API responses, retry and timeout rules, a Room cache and saved cities, DataStore settings, coarse location, and Hilt bindings from interface to implementation.
-
-**Why it matters.** DTOs change when the API changes; entities change when the product changes. Keeping them apart, and translating errors once at the edge, means the rest of the app never sees `HttpException` or a JSON field name.
-
-**What you will find in this branch**
-
-| Where | What |
-|---|---|
-| `data/…/remote/` | DTOs, Retrofit APIs, OkHttp rules, error mapping |
-| `data/…/mapper/` | DTO → domain entities |
-| `data/…/local/` | Room database, cache key (Locale.ROOT!) |
-| `data/…/repository/` | Implementations of the domain interfaces |
-| `data/src/test/` | Tests reading docs/api/samples directly |
-
-**How to study this step**
-
-1. **Read the full guide:** [docs/steps/04-data-layer.md](docs/steps/04-data-layer.md): key ideas, diagrams, and *how the AI agent helped* (including what went wrong).
-2. **See exactly what this step changed:** [compare with step 03](https://github.com/AhmedJAbuSada/atmos-android/compare/step-03-domain-layer...step-04-data-layer).
-3. **Run it:**
-   ```bash
-   ./gradlew :data:testDebugUnitTest
-   ./gradlew :data:koverVerify
-   ```
-4. **Try the exercise:** Add `uv_index_max` to the daily forecast end to end: DTO → mapper → entity → a test with a new recorded sample.
-
-> This README shows the project *as it was at this step*. The finished app is on
-> [`main`](https://github.com/AhmedJAbuSada/atmos-android).
-
----
+> ### 📍 You are on `main`: the finished app
+> This branch is the complete app. To **learn how it was built**, start at
+> [**Step 01 — Planning: documents before code**](https://github.com/AhmedJAbuSada/atmos-android/tree/step-01-planning) and follow the steps in order:
+> each step branch has its own README that explains what that step is, why it exists,
+> and what changed. All steps: [ROADMAP.md](docs/ROADMAP.md).
 <!-- step-banner:end -->
 
 ![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?logo=kotlin&logoColor=white)
@@ -97,6 +69,11 @@ solves the same problem.
 - 🌡 °C / °F, km/h / m/s / mph
 - 🌙 Dark mode
 - 🌍 **English, Türkçe, العربية** (full right-to-left layout)
+
+> **Note on translations:** the Turkish and Arabic texts were written with an AI agent and
+> have **not yet been reviewed by a native speaker**. See
+> [LOCALIZATION_REVIEW.md](docs/process/LOCALIZATION_REVIEW.md) for the review checklist;
+> corrections are welcome.
 
 Weather data by [Open-Meteo.com](https://open-meteo.com/). No API key is needed:
 clone and run.
