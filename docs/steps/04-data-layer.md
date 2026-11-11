@@ -1,6 +1,6 @@
 # Step 04 — Data layer: the app's "backend" on the phone
 
-**Branch:** `step-04-data-layer` · **Tag:** `v0.4.0` · **Previous:** [step 03](03-domain-layer.md) · **Next:** step 05, presentation / UI
+**Branch:** `step-04-data-layer` · **Tag:** `v0.4.0` · **Previous:** [step 03](03-domain-layer.md) · **Next:** [step 05, presentation / UI](05-presentation-ui.md)
 
 A mobile app has its own backend inside it: an HTTP client, a database, a key-value
 store, and device services like location. The data layer contains all of them, and

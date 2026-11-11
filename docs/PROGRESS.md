@@ -2,8 +2,8 @@
 
 > Read this first at the start of every work session (human or AI). Update it at the end.
 
-**Current step:** 04, data layer ✅ done
-**Next up:** step 05, presentation / UI (`step-05-presentation-ui`)
+**Current step:** 05, presentation / UI ✅ done
+**Next up:** step 06, integration (`step-06-integration`)
 **Last updated:** 2026-11-11
 
 ## Status
@@ -14,29 +14,36 @@
 | 02 Project structure | ✅ Done | `step-02-project-structure` | `v0.2.0` |
 | 03 Domain layer | ✅ Done | `step-03-domain-layer` | `v0.3.0` |
 | 04 Data layer | ✅ Done | `step-04-data-layer` | `v0.4.0` |
-| 05 Presentation / UI | ⏳ Next | `step-05-presentation-ui` | — |
-| 06 Integration | ⬜ | — | — |
+| 05 Presentation / UI | ✅ Done | `step-05-presentation-ui` | `v0.5.0` |
+| 06 Integration | ⏳ Next | `step-06-integration` | — |
 | 07 Quality & release | ⬜ | — | — |
 
-## Next up: step 05 plan
-Everything in `:app`. Screens use **fake data** (preview providers) in this step; wiring to
-the real use cases is step 06.
-1. **Design system** (`ui/theme/`): colour schemes (light, dark, dynamic colour on
-   Android 12+), typography, spacing tokens, shapes; `AtmosTheme`.
-2. **Formatting** (`ui/format/`): temperature, wind, percentage, hour and day names with
-   the **app locale** (decimal comma in Turkish, 12/24 h from the device); unit tests in
-   en, tr and ar.
-3. **Condition UI** (`ui/weather/`): `WeatherCondition` → localized label + icon, with a
-   night variant for clear skies.
-4. **Error UI**: `DomainError` → localized message.
-5. **Screens** (stateless, `state` + `onEvent`): Home (current, hourly row, daily list,
-   outdated banner, skeleton loading, error with retry), Cities (search field, results,
-   saved list with swipe-to-remove and Undo), Settings, About.
-6. **ViewModels** with one `StateFlow<UiState>` each, tested with fake use cases and
-   Turbine; search debounce 300 ms in `CitiesViewModel`.
-7. **Strings** for every screen in `values`, `values-tr`, `values-ar`.
-8. **Previews**: light, dark, Arabic RTL and font scale 2× for every screen.
-9. `docs/steps/05-presentation-ui.md`, prompts file, update this file.
+## Next up: step 06 plan
+Connect the step-05 screens to the step-03 use cases (step-04 implementations via Hilt).
+1. **Test fixtures:** move the domain fakes to `domain/src/testFixtures` (`java-test-fixtures`)
+   so ViewModel tests in `:app` reuse them.
+2. **ViewModels** (`@HiltViewModel`, one `StateFlow<UiState>`, events in, one-off effects
+   out through a `Channel`):
+   - `HomeViewModel`: selected place (current location or a saved city), load on start,
+     refresh, retry, outdated banner from `ForecastSnapshot.refreshError` + age,
+     settings flow combined in.
+   - `CitiesViewModel`: query with 300 ms debounce (`debounce` + `mapLatest`), search in
+     the app language, add / remove with Undo snackbar effect, places list with cached
+     temperatures.
+   - `SettingsViewModel`: observe and update settings.
+3. **Selected place** shared between Home and Cities (a small `SelectedPlaceStore` in
+   `:app`, in memory; the current location by default).
+4. **Language:** apply `AppLanguage` with `AppCompatDelegate.setApplicationLocales`
+   (needs `androidx.appcompat`), and resolve `System` to the configuration locale for
+   search.
+5. **Location permission** with `rememberLauncherForActivityResult`, rationale first
+   (US-01), `NeedsLocation` when denied.
+6. **Navigation Compose** with type-safe routes: Home → Cities, Home → Settings → About.
+7. **Theme** from settings in `MainActivity`; links opened with a Custom Tab / browser
+   intent.
+8. **Tests:** ViewModel tests with Turbine and fakes for every acceptance criterion that
+   lives in the presentation layer (debounce, undo, refresh state).
+9. `docs/steps/06-integration.md`, prompts file, update this file.
 
 ## Open decisions
 - None.
