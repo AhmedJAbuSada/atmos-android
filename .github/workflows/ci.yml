@@ -48,6 +48,9 @@ jobs:
       - name: Unit tests
         run: ./gradlew test
 
+      - name: Domain coverage ≥ 90%
+        run: ./gradlew :domain:koverVerify
+
       - name: Build debug APK
         run: ./gradlew assembleDebug
 
