@@ -55,6 +55,22 @@ jobs:
       - name: Build debug APK
         run: ./gradlew assembleDebug
 
+      # Turns each failing test into an annotation on the run's summary page, so the
+      # reason is visible without downloading the reports.
+      - name: Annotate failing tests
+        if: failure()
+        run: |
+          python3 - <<'PY'
+          import glob, xml.etree.ElementTree as ET
+          for path in glob.glob("**/build/test-results/**/*.xml", recursive=True):
+              for case in ET.parse(path).getroot().iter("testcase"):
+                  for problem in list(case):
+                      if problem.tag in ("failure", "error"):
+                          message = (problem.get("message") or problem.text or "")[:500]
+                          message = message.replace("%", "%25").replace("\r", "").replace("\n", "%0A")
+                          print(f"::error title={case.get('classname')}::{case.get('name')}: {message}")
+          PY
+
       - name: Upload reports
         if: always()
         uses: actions/upload-artifact@v5
