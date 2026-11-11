@@ -6,8 +6,8 @@ import dev.ahmedabusada.atmos.data.remote.ForecastApi
 import dev.ahmedabusada.atmos.data.remote.RetryInterceptor
 import dev.ahmedabusada.atmos.data.remote.createOkHttpClient
 import dev.ahmedabusada.atmos.data.remote.createRetrofit
+import dev.ahmedabusada.atmos.data.testing.FakeForecastCacheDao
 import dev.ahmedabusada.atmos.data.testing.Samples
-import dev.ahmedabusada.atmos.data.testing.inMemoryDatabase
 import dev.ahmedabusada.atmos.domain.common.AppResult
 import dev.ahmedabusada.atmos.domain.common.DomainError
 import dev.ahmedabusada.atmos.domain.location.Coordinates
@@ -22,37 +22,29 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 import retrofit2.create
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneOffset
 import java.util.concurrent.TimeUnit
 
-/** The real repository, real Room, real Retrofit: only the server is local. */
-@RunWith(RobolectricTestRunner::class)
-@Config(sdk = [36])
+/** The real repository and real Retrofit; the server is local and the cache in memory. */
 class WeatherRepositoryImplTest {
     private val now = Instant.parse("2026-11-11T07:15:00Z")
     private val istanbul = Coordinates(41.01, 28.97)
     private val server = MockWebServer().apply { start() }
-    private val database = inMemoryDatabase()
+    private val dao = FakeForecastCacheDao()
 
     private fun repository(client: OkHttpClient = createOkHttpClient("test", RetryInterceptor(baseDelayMillis = 0))) =
         WeatherRepositoryImpl(
             api = createRetrofit(server.url("/").toString(), client).create<ForecastApi>(),
-            cache = database.forecastCacheDao(),
+            cache = dao,
             clock = Clock.fixed(now, ZoneOffset.UTC),
             io = Dispatchers.Unconfined,
         )
 
     @After
-    fun tearDown() {
-        server.close()
-        database.close()
-    }
+    fun tearDown() = server.close()
 
     @Test
     fun `a successful fetch returns the forecast and caches it`() = runTest {
@@ -108,7 +100,7 @@ class WeatherRepositoryImplTest {
 
     @Test
     fun `a cache entry that no longer parses is treated as no cache`() = runTest {
-        database.forecastCacheDao().upsert(ForecastCacheEntity(istanbul.cacheKey(), json = "not json", 0))
+        dao.upsert(ForecastCacheEntity(istanbul.cacheKey(), json = "not json", 0))
 
         assertNull(repository().getCachedForecast(istanbul))
     }

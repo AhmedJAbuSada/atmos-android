@@ -1,9 +1,6 @@
 package dev.ahmedabusada.atmos.data.location
 
-import android.Manifest
-import android.app.Application
 import android.location.Location
-import androidx.test.core.app.ApplicationProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.tasks.Tasks
 import dev.ahmedabusada.atmos.domain.common.AppResult
@@ -15,27 +12,20 @@ import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
-import org.robolectric.Shadows.shadowOf
-import org.robolectric.annotation.Config
 
 /**
  * Google Play services cannot run on the JVM, so here, unlike elsewhere, we use a mock
- * for the location client: it is a third-party boundary we do not own.
+ * for the location client: it is a third-party boundary we do not own. The permission is
+ * a one-method interface, so no Android `Context` is needed.
  */
-@RunWith(RobolectricTestRunner::class)
-@Config(sdk = [36])
 class LocationRepositoryImplTest {
-    private val application = ApplicationProvider.getApplicationContext<Application>()
+    private var granted = false
     private val client = mockk<FusedLocationProviderClient>()
-    private val repository = LocationRepositoryImpl(application, client)
+    private val repository = LocationRepositoryImpl(permission = { granted }, client = client)
 
-    private fun grantPermission() = shadowOf(application).grantPermissions(Manifest.permission.ACCESS_COARSE_LOCATION)
-
-    private fun location(lat: Double, lon: Double) = Location("test").apply {
-        latitude = lat
-        longitude = lon
+    private fun location(lat: Double, lon: Double) = mockk<Location> {
+        every { latitude } returns lat
+        every { longitude } returns lon
     }
 
     @Test
@@ -46,7 +36,7 @@ class LocationRepositoryImplTest {
 
     @Test
     fun `with permission, returns the current position`() = runTest {
-        grantPermission()
+        granted = true
         every { client.getCurrentLocation(any<Int>(), any()) } returns Tasks.forResult(location(41.01, 28.97))
 
         assertEquals(AppResult.Success(Coordinates(41.01, 28.97)), repository.getCurrentLocation())
@@ -54,7 +44,7 @@ class LocationRepositoryImplTest {
 
     @Test
     fun `given no current fix, falls back to the last known position`() = runTest {
-        grantPermission()
+        granted = true
         every { client.getCurrentLocation(any<Int>(), any()) } returns Tasks.forResult(null)
         every { client.lastLocation } returns Tasks.forResult(location(39.92, 32.85))
 
@@ -63,7 +53,7 @@ class LocationRepositoryImplTest {
 
     @Test
     fun `given no position at all, returns location unavailable`() = runTest {
-        grantPermission()
+        granted = true
         every { client.getCurrentLocation(any<Int>(), any()) } returns Tasks.forResult(null)
         every { client.lastLocation } returns Tasks.forResult(null)
 
@@ -72,7 +62,7 @@ class LocationRepositoryImplTest {
 
     @Test
     fun `given the location service fails, returns location unavailable`() = runTest {
-        grantPermission()
+        granted = true
         every { client.getCurrentLocation(any<Int>(), any()) } returns Tasks.forException(IllegalStateException())
 
         assertEquals(AppResult.Failure(DomainError.LocationUnavailable), repository.getCurrentLocation())
