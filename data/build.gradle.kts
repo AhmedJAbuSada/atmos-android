@@ -26,8 +26,15 @@ android {
     }
 
     testOptions {
-        // Robolectric needs Android resources to run Room on the JVM.
-        unitTests.isIncludeAndroidResources = true
+        unitTests {
+            // Robolectric needs Android resources to run Room on the JVM.
+            isIncludeAndroidResources = true
+            all { test ->
+                // Robolectric reads JDK internals (java.io.FileDescriptor) by reflection,
+                // which JDK 17+ blocks unless the package is opened explicitly.
+                test.jvmArgs("--add-opens=java.base/java.io=ALL-UNNAMED")
+            }
+        }
     }
 }
 
