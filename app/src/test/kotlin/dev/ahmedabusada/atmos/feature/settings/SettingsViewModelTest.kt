@@ -9,6 +9,7 @@ import dev.ahmedabusada.atmos.domain.settings.TemperatureUnit
 import dev.ahmedabusada.atmos.domain.settings.UpdateSettingsUseCase
 import dev.ahmedabusada.atmos.domain.settings.WindSpeedUnit
 import dev.ahmedabusada.atmos.testing.MainDispatcherRule
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -17,6 +18,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 
+@OptIn(ExperimentalCoroutinesApi::class) // advanceUntilIdle: run the virtual clock to the end
 class SettingsViewModelTest {
     @get:Rule
     val main = MainDispatcherRule()

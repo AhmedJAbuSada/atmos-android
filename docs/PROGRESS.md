@@ -2,8 +2,8 @@
 
 > Read this first at the start of every work session (human or AI). Update it at the end.
 
-**Current step:** 06, integration ✅ done
-**Next up:** step 07, quality & release (`step-07-quality-release`)
+**Current step:** 07, quality & release ✅ done. **Android v1.0.0 is complete.**
+**Next up:** the same seven steps for iOS ([atmos-ios](https://github.com/AhmedJAbuSada/atmos-ios))
 **Last updated:** 2026-11-11
 
 ## Status
@@ -16,25 +16,14 @@
 | 04 Data layer | ✅ Done | `step-04-data-layer` | `v0.4.0` |
 | 05 Presentation / UI | ✅ Done | `step-05-presentation-ui` | `v0.5.0` |
 | 06 Integration | ✅ Done | `step-06-integration` | `v0.6.0` |
-| 07 Quality & release | ⏳ Next | `step-07-quality-release` | — |
+| 07 Quality & release | ✅ Done | `step-07-quality-release` | `v1.0.0` |
 
-## Next up: step 07 plan
-1. **Screenshot tests** (Roborazzi on Robolectric) for every screen state in light, dark,
-   Arabic RTL and Turkish 200% font; images committed under `app/src/test/screenshots`
-   and shown in the README.
-2. **UI tests** (Compose UI test on Robolectric) for the key flows: search → add → undo,
-   settings unit change, NeedsLocation actions.
-3. **Accessibility:** automated checks in the UI tests (touch targets, content
-   descriptions); manual TalkBack pass checklist.
-4. **Performance:** Baseline Profile for startup and scrolling; check recomposition
-   counts of the hourly row; R8 full mode in release.
-5. **Localization review:** native-speaker review checklist for tr and ar; pseudo-locale
-   (`en-XA`, `ar-XB`) builds enabled for debug.
-6. **Release build:** signing config read from environment variables (never committed),
-   `bundleRelease` in CI, version 1.0.0, changelog.
-7. **Room migration test** setup for future schema versions.
-8. Merge to `main` as v1.0.0; update README with screenshots and the final numbers.
-9. `docs/steps/07-quality-release.md`, prompts file, update this file.
+## After 1.0 (optional, not planned)
+- Baseline Profiles (needs a physical or managed device).
+- Roborazzi verify mode: fail CI on unexpected screenshot changes.
+- Room migration tests when the schema reaches version 2.
+- Native-speaker review of tr and ar; TalkBack pass on a real device
+  (see `docs/process/`).
 
 ## Open decisions
 - None.

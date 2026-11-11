@@ -1,6 +1,6 @@
 # Step 06 — Integration: connect the views to the real data
 
-**Branch:** `step-06-integration` · **Tag:** `v0.6.0` · **Previous:** [step 05](05-presentation-ui.md) · **Next:** step 07, quality & release
+**Branch:** `step-06-integration` · **Tag:** `v0.6.0` · **Previous:** [step 05](05-presentation-ui.md) · **Next:** [step 07, quality & release](07-quality-release.md)
 
 Every piece exists: business rules (step 03), data (step 04), screens (step 05). This step
 adds the glue: **ViewModels** that turn use-case results into UI state, **routes** that

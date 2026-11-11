@@ -17,23 +17,60 @@ android {
         applicationId = "dev.ahmedabusada.atmos"
         minSdk = 26
         targetSdk = 37
-        versionCode = 6
-        versionName = "0.6.0"
+        versionCode = 10
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // Release signing comes from environment variables (CI secrets or a developer's shell),
+    // never from a file in the repository. Without them, the release build is unsigned,
+    // which is fine for checking that it builds and shrinks correctly.
+    val releaseKeystore = System.getenv("ATMOS_KEYSTORE_PATH")
+    signingConfigs {
+        if (releaseKeystore != null) {
+            create("release") {
+                storeFile = file(releaseKeystore)
+                storePassword = System.getenv("ATMOS_KEYSTORE_PASSWORD")
+                keyAlias = System.getenv("ATMOS_KEY_ALIAS")
+                keyPassword = System.getenv("ATMOS_KEY_PASSWORD")
+            }
+        }
+    }
+
     buildTypes {
+        debug {
+            // Pseudo-locales: en-XA stretches every string (~30% longer, with accents) and
+            // ar-XB mirrors the layout, so truncation and RTL bugs show up without a
+            // translator (Settings → Languages on the device).
+            isPseudoLocalesEnabled = true
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.findByName("release")
         }
     }
 
     buildFeatures {
         compose = true
         buildConfig = true
+    }
+
+    testOptions {
+        unitTests {
+            // Screenshot tests render real Compose UI on the JVM with Robolectric.
+            isIncludeAndroidResources = true
+            all { test ->
+                // Robolectric needs this JDK 17+ package opened (see data/build.gradle.kts).
+                test.jvmArgs("--add-opens=java.base/jdk.internal.access=ALL-UNNAMED")
+                // `./gradlew :app:testDebugUnitTest -PrecordScreenshots` writes the images
+                // to docs/screenshots; a normal test run renders but writes nothing.
+                test.systemProperty("roborazzi.test.record", project.hasProperty("recordScreenshots").toString())
+                test.systemProperty("atmos.screenshots.dir", "$rootDir/docs/screenshots")
+            }
+        }
     }
 
     lint {
@@ -72,7 +109,18 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
 
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.compose.ui.test.junit4)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    debugImplementation(libs.compose.ui.test.manifest)
+
     testImplementation(testFixtures(project(":domain")))
+    testImplementation(platform(libs.compose.bom))
+    testImplementation(libs.compose.ui.test.junit4)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.roborazzi)
+    testImplementation(libs.roborazzi.compose)
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.turbine)

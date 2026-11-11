@@ -11,7 +11,15 @@ development with Clean Architecture and an AI coding agent.**
 
 [![CI](https://github.com/AhmedJAbuSada/atmos-android/actions/workflows/ci.yml/badge.svg)](https://github.com/AhmedJAbuSada/atmos-android/actions/workflows/ci.yml)
 
-> 🚧 **In progress:** steps 01–06 of 7 are done. The app works end to end. Follow along in [PROGRESS.md](docs/PROGRESS.md).
+> ✅ **Version 1.0.0.** All seven steps are done. The Android app is complete; iOS, React
+> Native and Flutter follow the same plan.
+
+| Home | Arabic (RTL) | Dark | Cities |
+|---|---|---|---|
+| ![Home](docs/screenshots/home_light.png) | ![Arabic](docs/screenshots/home_arabic.png) | ![Dark](docs/screenshots/home_dark.png) | ![Cities](docs/screenshots/cities_saved.png) |
+
+<sub>Rendered from the real Compose code by CI ([ScreenshotTest](app/src/test/kotlin/dev/ahmedabusada/atmos/screenshots/ScreenshotTest.kt)).
+More in [docs/screenshots](docs/screenshots/).</sub> Follow along in [PROGRESS.md](docs/PROGRESS.md).
 
 ## Why this repository exists
 
@@ -27,7 +35,7 @@ explained:
 | 04 | [`step-04-data-layer`](../../tree/step-04-data-layer) | Retrofit, mappers, Room cache, DataStore, cache-first repositories |
 | 05 | [`step-05-presentation-ui`](../../tree/step-05-presentation-ui) | Design system, stateless Compose screens, previews (dark, RTL, large font) |
 | 06 | [`step-06-integration`](../../tree/step-06-integration) | ViewModels, real data, location, search, offline mode, navigation |
-| 07 | `step-07-quality-release` | Localization, accessibility, performance, UI tests, release |
+| 07 | [`step-07-quality-release`](../../tree/step-07-quality-release) | Localization, accessibility, performance, UI tests, release |
 | — | `main` | The finished app |
 
 Full details: [ROADMAP.md](docs/ROADMAP.md).
@@ -82,6 +90,17 @@ the whole method, not just the result:
 - Every step guide ends with **"How the AI agent helped in this step"**, including what
   went wrong.
 - Commits written with the agent carry a `Co-Authored-By: Claude` line.
+
+## Quality, in numbers
+
+| | |
+|---|---|
+| JVM tests (unit, ViewModel, data, screenshot rendering) | 144 |
+| Line coverage gates (fail the build below) | `:domain` 90%, `:data` 80% |
+| End-to-end test on an Android emulator, real API | 1 journey |
+| Release (R8) build smoke-tested on an emulator | every push |
+| Languages | English, Türkçe, العربية (RTL) |
+| Secrets in the repository | 0 (no API key needed; signing from the environment) |
 
 ## Run it
 
