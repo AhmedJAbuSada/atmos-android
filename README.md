@@ -3,6 +3,42 @@
 **A weather app built step by step, as a public tutorial on professional Android
 development with Clean Architecture and an AI coding agent.**
 
+<!-- step-banner:start -->
+## 📍 You are on Step 02 of 7 — Project structure: the architecture as a compile-time rule
+
+`step-02-project-structure` · [← Step 01](https://github.com/AhmedJAbuSada/atmos-android/tree/step-01-planning) · [Step 03 →](https://github.com/AhmedJAbuSada/atmos-android/tree/step-03-domain-layer) · [All steps](docs/ROADMAP.md)
+
+**What this step is.** The empty project with the right walls: three Gradle modules (`:domain`, `:data`, `:app`) where `:domain` cannot even see the Android SDK, a version catalog for every dependency, Hilt, Spotless/ktlint, strict Android Lint, a custom check for the Turkish casing bug, and a CI pipeline on every push.
+
+**Why it matters.** Rules a machine can check should never need a code-review comment. Once code piles up, walls are very hard to add; here an Android import in the domain is a *compile error* from day one.
+
+**What you will find in this branch**
+
+| Where | What |
+|---|---|
+| `settings.gradle.kts` | Declares the 3 modules and the dependency rule |
+| `gradle/libs.versions.toml` | Every dependency version, in one place |
+| `domain/, data/, app/` | The three layers as modules |
+| `build.gradle.kts` | Spotless and the `checkLocaleSafeCasing` task |
+| `.github/workflows/ci.yml` | Format, casing, lint, tests and build on every push |
+
+**How to study this step**
+
+1. **Read the full guide:** [docs/steps/02-project-structure.md](docs/steps/02-project-structure.md): key ideas, diagrams, and *how the AI agent helped* (including what went wrong).
+2. **See exactly what this step changed:** [compare with step 01](https://github.com/AhmedJAbuSada/atmos-android/compare/step-01-planning...step-02-project-structure).
+3. **Run it:**
+   ```bash
+   ./gradlew assembleDebug
+   ./gradlew spotlessCheck checkLocaleSafeCasing lint test
+   ```
+4. **Try the exercise:** Add `import android.content.Context` to a file in `:domain` and build. Then call `"abc".uppercase()` in `src/main` and run the checks. Read the errors.
+
+> This README shows the project *as it was at this step*. The finished app is on
+> [`main`](https://github.com/AhmedJAbuSada/atmos-android).
+
+---
+<!-- step-banner:end -->
+
 ![Kotlin](https://img.shields.io/badge/Kotlin-7F52FF?logo=kotlin&logoColor=white)
 ![Jetpack Compose](https://img.shields.io/badge/Jetpack%20Compose-4285F4?logo=jetpackcompose&logoColor=white)
 ![Clean Architecture](https://img.shields.io/badge/Clean%20Architecture-3%20layers-success)
