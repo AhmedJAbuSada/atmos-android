@@ -18,6 +18,14 @@
 | 06 Integration | ✅ Done | `step-06-integration` | `v0.6.0` |
 | 07 Quality & release | ✅ Done | `step-07-quality-release` | `v1.0.0` |
 
+## Fixes after 1.0.0
+- **Arabic time order** (`fix/arabic-time-order`): times were wrapped in a left-to-right
+  isolate, so with a 12-hour clock Arabic "2 م" showed the AM/PM word first for a right-to-left
+  reader. Times now use a *first strong* isolate (U+2068): Arabic times read right to left,
+  English and Turkish times stay left to right. Found by comparing with the Flutter app's Arabic
+  screenshots. **Lesson:** "isolate every value" is not right for every value; a time contains a
+  word. Four apps of the same product review each other.
+
 ## After 1.0 (optional, not planned)
 - Baseline Profiles (needs a physical or managed device).
 - Roborazzi verify mode: fail CI on unexpected screenshot changes.

@@ -6,8 +6,8 @@ name: CI
 on:
   pull_request:
   push:
-    # main, plus the tutorial's step branches, so every snapshot is verified too.
-    branches: [main, "step-*"]
+    # main, the tutorial's step branches (every snapshot is verified too) and fix branches.
+    branches: [main, "step-*", "fix/*"]
 
 # A new push to the same branch cancels the previous run, which saves CI minutes.
 concurrency:
