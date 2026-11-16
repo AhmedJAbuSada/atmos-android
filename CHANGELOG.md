@@ -4,6 +4,11 @@ All notable changes to Atmos. The format follows [Keep a Changelog](https://keep
 and versions follow [Semantic Versioning](https://semver.org/). Each tutorial step is one
 minor version until 1.0.0.
 
+## [Unreleased]
+### Fixed
+- Arabic times read in the natural order ("2 م", not the AM/PM word first) with a 12-hour
+  clock. Found by comparing the Arabic screenshots with the Flutter app.
+
 ## [1.0.0] — step 07, quality & release
 ### Added
 - End-to-end device test of the city-search journey against the real API.
