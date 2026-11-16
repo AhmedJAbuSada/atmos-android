@@ -59,8 +59,13 @@ class WeatherFormatter(locale: Locale, private val use24HourClock: Boolean) {
     /** `69%`, `%69` in Turkish. */
     fun percentage(value: Int): String = isolate(percent.format(value / PERCENT))
 
-    /** `14:00` or `2 PM`, following the device's 24-hour setting. */
-    fun hour(time: LocalDateTime): String = isolate(hourFormat.format(time))
+    /**
+     * `14:00` or `2 PM`, following the device's 24-hour setting. Isolated by its first letter,
+     * not forced left to right: Arabic writes `2 م` (hour, then the AM/PM word), which must read
+     * right to left; forced left to right it showed the word first. Found by comparing with the
+     * Flutter app's Arabic screenshots.
+     */
+    fun hour(time: LocalDateTime): String = isolateByFirstLetter(hourFormat.format(time))
 
     /** `Thursday`, `Perşembe`, `الخميس`. */
     fun dayName(day: DayOfWeek): String = day.getDisplayName(TextStyle.FULL, locale)
@@ -82,8 +87,14 @@ class WeatherFormatter(locale: Locale, private val use24HourClock: Boolean) {
         private const val LRI = '\u2066'
         private const val PDI = '\u2069'
 
+        /** First strong isolate: the direction comes from the first letter inside. */
+        private const val FSI = '\u2068'
+
         /** Keeps [value] left to right and in one piece, whatever text surrounds it. */
         fun isolate(value: String): String = "$LRI$value$PDI"
+
+        /** Keeps [value] in one piece; Arabic letters inside make it read right to left. */
+        fun isolateByFirstLetter(value: String): String = "$FSI$value$PDI"
         private const val PERCENT = 100.0
 
         /**

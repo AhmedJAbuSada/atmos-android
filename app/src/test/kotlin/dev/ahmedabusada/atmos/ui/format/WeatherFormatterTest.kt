@@ -14,7 +14,7 @@ import java.util.Locale
 /** The same values, formatted in all three app languages. */
 class WeatherFormatterTest {
     /** The visible text, without the invisible directional isolates. */
-    private fun String.visible() = filterNot { it == '\u2066' || it == '\u2069' }
+    private fun String.visible() = filterNot { it == '\u2066' || it == '\u2068' || it == '\u2069' }
 
     private val english = WeatherFormatter(Locale.forLanguageTag("en"), use24HourClock = true)
     private val turkish = WeatherFormatter(Locale.forLanguageTag("tr"), use24HourClock = true)
@@ -56,6 +56,17 @@ class WeatherFormatterTest {
         val wind = WindSpeed(24.8)
         assertEquals("25 km/h", english.windSpeed(wind, WindSpeedUnit.KilometersPerHour).visible())
         assertEquals("15 mph", english.windSpeed(wind, WindSpeedUnit.MilesPerHour).visible())
+    }
+
+    @Test
+    fun `Arabic hours read right to left, English hours left to right`() {
+        val time = LocalDateTime.of(2026, 11, 11, 14, 0)
+        val arabic12 = WeatherFormatter(Locale.forLanguageTag("ar"), use24HourClock = false).hour(time)
+        // A first-strong isolate: the Arabic AM/PM word makes the whole time right to left.
+        assertEquals('\u2068', arabic12.first())
+        assertEquals("2 م", arabic12.visible())
+        assertEquals('\u2068', english.hour(time).first())
+        assertEquals("14:00", english.hour(time).visible())
     }
 
     @Test
